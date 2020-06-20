@@ -1,0 +1,74 @@
+<!--
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8" >
+        <link rel="stylesheet" href="css/style.css"/>
+        <title>Weather Journal</title>
+    </head>
+    <body>
+        <div class="container">
+            <div id="header">Weather Journal</div>
+            <form class="form">
+                <label for="zip">Zip code : </label><br>
+                <input id="zip" placeholder="Enter 5 digit zip code here ..." minlength="5" maxlength="5" required><span id="errMsg"></span><br><br>
+                <label for="feelings" >Comments : </label><br>
+                <textarea id="feelings" rows="4" cols="50"></textarea><br>
+                <button id="generate">GO</button>
+            </form>
+            <div id="entryHolder">
+                <span id="intro"></span><span id=city></span>
+                <div class="output" id="date"></div>
+                <div class="output" id="temp"></div>
+                <div class="output" id="content"></div>
+            </div>
+        </div>
+        <script>
+            // Check that service workers are supported
+            if ('serviceWorker' in navigator) {
+              // Use the window load event to keep the page load performant
+              window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+              });
+            };
+        </script>
+        <script>
+            document.getElementById('generate').addEventListener('click', Client.getData);
+        </script>
+        <script></script>
+    </body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8" >
+        <title>Travel Planner</title>
+    </head>
+    <body>
+        <div class="container">
+            <div id="header">Travel Planner</div>
+            <div class="form">
+                <label for="destination">Destination : </label><br>
+                <input id="destination" placeholder="Enter your destination i.e. Paris ..." required><span id="errMsg"></span><br><br>
+                <button id="search" type="button">Take Me Away</button>
+            </div>
+            <div id="entryHolder">
+                <span id=city></span>
+                <div class="output" id="city_lat"></div>
+                <div class="output" id="city_lng"></div>
+                <div class="output" id="country"></div>
+            </div>
+        </div>
+        <script>
+            // Check that service workers are supported
+            if ('serviceWorker' in navigator) {
+              // Use the window load event to keep the page load performant
+              window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../../sw.js');
+              });
+            };
+        </script>
+        <script></script>
+    </body>
+</html>

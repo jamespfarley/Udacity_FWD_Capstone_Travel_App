@@ -1,0 +1,48 @@
+{
+  "name": "fwd_proj5_capstone_travel_app",
+  "version": "1.0.0",
+  "description": "Capstone Travel App Project",
+  "dependencies": {
+    "@babel/runtime": "^7.10.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "cors-anywhere": "^0.4.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
+    "serviceworker-webpack-plugin": "^1.0.1"
+  },
+  "scripts": {
+    "test": "jest --detectOpenHandles --forceExit",
+    "start": "node src/server/server.js",
+    "dev": "webpack-dev-server --config webpack.config.js --open",
+    "build": "webpack --config webpack.config.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-transform-runtime": "^7.10.3",
+    "@babel/preset-env": "^7.10.2",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.5.3",
+    "file-loader": "^6.0.0",
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.3.0",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SemajYelraf/ .git"
+  },
+  "author": "James P Farley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SemajYelraf/Udacity_FWD_Capstone_Travel_App/issues"
+  },
+  "homepage": "https://github.com/SemajYelraf/Udacity_FWD_Capstone_Travel_App#readme"
+}

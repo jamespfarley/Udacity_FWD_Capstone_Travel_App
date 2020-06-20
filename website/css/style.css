@@ -1,0 +1,88 @@
+
+@import url("https://fonts.googleapis.com/css?family=Oswald");
+@import url("https://fonts.googleapis.com/css?family=Raleway");
+
+/* * {
+    border: 1px solid red;
+} */
+
+input:invalid:required {
+    border: 2px solid red;
+}
+
+input:valid {
+    border: 1px solid black;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: 10vh 30vh 23vh;
+    grid-row-gap: 10px;
+    grid-template-areas: 
+        "hd"
+        "form"
+        "output"
+}
+
+.form {
+    grid-area: form;
+    border-radius: 5px;
+    background-color:#5BC0EB;
+    padding-left: 9px;
+    padding-top: 11px;
+}
+
+.output {
+    padding: 3px 9px;
+    padding-left: 25px;
+    font-family: Oswald;
+    font-size: 20px;
+}
+
+#header {
+    grid-area: hd;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 40px;
+    line-height: 75px;
+    background-color:  #FDE74C;
+    font-family: Raleway;
+}
+
+#entryHolder {
+    grid-area: output;
+    background-color: #9BC53D;
+    border-radius: 5px;
+}
+
+#intro, #city {
+    margin: 0px 0px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-right: 0px;
+    padding-left: 9px;
+    font-family: Oswald;
+    font-size: 20px;    
+}
+
+#errMsg {
+    padding-left: 15px;
+    font-family: Raleway;
+    color: red;
+}
+
+label {
+    font-family: Oswald;
+    font-size: 20px;
+}
+
+textarea {
+    font-family: Raleway;
+    font-size: 15px;
+}
+
+input[type='text'] {
+    font-family: Raleway;
+    font-size: 15px;
+    size: "10";
+}
