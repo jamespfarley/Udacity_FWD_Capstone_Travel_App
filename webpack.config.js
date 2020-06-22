@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     entry: './src/client/index.js', 
@@ -42,6 +43,7 @@ module.exports = {
         }),
         new ServiceWorkerWebpackPlugin({
             entry: path.join(__dirname, 'src/sw.js'),
-          })
+          }),
+        new Dotenv()
     ]
-}
+};

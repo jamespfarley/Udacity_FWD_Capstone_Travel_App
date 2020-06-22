@@ -25,6 +25,7 @@
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.5.3",
+    "dotenv-webpack": "^1.8.0",
     "file-loader": "^6.0.0",
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.3.0",
@@ -37,12 +38,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SemajYelraf/ .git"
+    "url": "git+https://github.com/SemajYelraf/Udacity_FWD_Capstone_Travel_App.git"
   },
   "author": "James P Farley",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/SemajYelraf/Udacity_FWD_Capstone_Travel_App/issues"
   },
-  "homepage": "https://github.com/SemajYelraf/Udacity_FWD_Capstone_Travel_App#readme"
+  "homepage": "https://github.com/SemajYelraf/Udacity_FWD_Capstone_Travel_App#readme",
+  "optionalDependencies": {}
 }
