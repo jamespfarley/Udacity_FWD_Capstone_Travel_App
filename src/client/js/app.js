@@ -2,14 +2,9 @@
 // a window.fetch compatible API on Node.js runtime
 const fetch = require('node-fetch');
 
-// Add focus to zip code input
-function addzipCodeFocus(){
-    document.getElementById('zip').focus();
-}
 // Function to addEventListener to SEARCH button
 export function initSearchBtn(){
-    //document.getElementById('search').addEventListener('click', getDestinationData(event));
-    console.log('...app.js : initSearchBtn()');
+    document.getElementById('search').addEventListener('click', getDestinationData(event));
 }
 
 /* Function called by event listener */
@@ -20,23 +15,22 @@ export function getDestinationData(event){
                             console.log('... app.js : getDestinationData()');
 
                             const destination = document.getElementById('destination').value;
-                            document.getElementById('errMsg').innerHTML = "";
-                            document.getElementById('intro').innerHTML = "";
+                            //!!!
+                            console.log(`... getDestinationData() : destination = ${destination}`);
+                            document.getElementById('city').innerHTML = "";
                             document.getElementById('city_lat').innerHTML = "";
-                            document.getElementById('city_long').innerHTML = "";
+                            document.getElementById('city_lng').innerHTML = "";
                             document.getElementById('country').innerHTML = "";
 
+                            const geonamesURL = `http://api.geonames.org/searchJSON?username=${process.env.GEONAMES_ID}&lang=en&maxRows=1&style=short&name_equals=${destination}`
 
-                            //const openWeatherURL = `https://api.openweathermap.org/data/2.5/weather?zip=${zipCode}${unitsFormats}${openWeatherMapAPIkey}`;
-                            const geonamesURL = `http://api.geonames.org/search?username=${process.env.GEONAMES_ID}&lang=en&type=JSON&maxRows=1&style=short&name_equals=${destination}`
-
-                            getCityData(geonamesURL, zipCode)
-                            .then((data) => postData('http://localhost:8083/destination', { latitude: data.geonames[0].lat
+                            getCityData(geonamesURL)
+                            .then((data) => postData('http://localhost:8081/destination', { latitude: data.geonames[0].lat
                                                                                     , longitude: data.geonames[0].lng
                                                                                     , city: data.geonames[0].name
-                                                                                    , country: data.geonames[0].country}))
+                                                                                    , country: data.geonames[0].countryCode}))
                             .then(() => updateUI())
-                            .catch((error) => {console.error(`getWeather() chained promises :: error: ${error}`)});
+                            .catch((error) => {console.error(`getDestinationData() chained promises :: error: ${error}`)});
 }
 
 
@@ -47,11 +41,11 @@ const getCityData = async (url) => {
 
                                     const response = await fetch(url).catch( error => { console.log(`getCityData fetch() error: ${error}`)});
                                     try{
-                                        const weatherData = await response.json();
+                                        const cityData = await response.json();
                                         // !!!
-                                        console.log('app.js : getCityData() :: weatherData = ' + JSON.stringify(weatherData));
+                                        console.log('app.js : getCityData() :: cityData = ' + JSON.stringify(cityData));
 
-                                        return weatherData;
+                                        return cityData;
                                     } catch(error) {
                                         console.error(`Error in getCityData() : ${error}`);
                                     }
@@ -89,7 +83,9 @@ const postData = async (url, data) => {
 const updateUI = async () => {
                                 console.log('... app.js : updateUI()');
 
-                                const request = await fetch('http://localhost:8083/destination').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
+                                const request = await fetch('http://localhost:8081/destination').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
+                                // !!!
+                                console.log(`updateUI : request object = ${JSON.stringify(request)}`);
                                 try{
                                     const data = await request.json();
 
