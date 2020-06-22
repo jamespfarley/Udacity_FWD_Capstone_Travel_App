@@ -168,17 +168,17 @@ const fetch = __webpack_require__(/*! node-fetch */ "./node_modules/node-fetch/b
 
 // Function to addEventListener to SEARCH button
 function initSearchBtn(){
-    document.getElementById('search').addEventListener('click', getDestinationData(event));
+    document.getElementById('search').addEventListener('click', getDestinationData);
 }
 
 /* Function called by event listener */
-function getDestinationData(event){
-                            event.preventDefault();
+function getDestinationData(){
+                            //event.preventDefault();
 
                             // !!!
                             console.log('... app.js : getDestinationData()');
 
-                            const destination = document.getElementById('destination').value;
+                            const destination = 'Paris'; //document.getElementById('destination').value;
                             //!!!
                             console.log(`... getDestinationData() : destination = ${destination}`);
                             document.getElementById('city').innerHTML = "";
@@ -189,7 +189,7 @@ function getDestinationData(event){
                             const geonamesURL = `http://api.geonames.org/searchJSON?username=${"jamespfarley"}&lang=en&maxRows=1&style=short&name_equals=${destination}`
 
                             getCityData(geonamesURL)
-                            .then((data) => postData('http://localhost:8081/destination', { latitude: data.geonames[0].lat
+                            .then((data) => postData('http://localhost:8081/destination', {latitude: data.geonames[0].lat
                                                                                     , longitude: data.geonames[0].lng
                                                                                     , city: data.geonames[0].name
                                                                                     , country: data.geonames[0].countryCode}))

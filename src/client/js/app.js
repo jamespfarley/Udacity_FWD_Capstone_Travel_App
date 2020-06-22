@@ -4,17 +4,16 @@ const fetch = require('node-fetch');
 
 // Function to addEventListener to SEARCH button
 export function initSearchBtn(){
-    document.getElementById('search').addEventListener('click', getDestinationData(event));
+    document.getElementById('search').addEventListener('click', getDestinationData);
 }
 
 /* Function called by event listener */
-export function getDestinationData(event){
-                            event.preventDefault();
+export function getDestinationData(){
 
                             // !!!
                             console.log('... app.js : getDestinationData()');
 
-                            const destination = document.getElementById('destination').value;
+                            const destination = 'Paris'; //document.getElementById('destination').value;
                             //!!!
                             console.log(`... getDestinationData() : destination = ${destination}`);
                             document.getElementById('city').innerHTML = "";
@@ -25,7 +24,7 @@ export function getDestinationData(event){
                             const geonamesURL = `http://api.geonames.org/searchJSON?username=${process.env.GEONAMES_ID}&lang=en&maxRows=1&style=short&name_equals=${destination}`
 
                             getCityData(geonamesURL)
-                            .then((data) => postData('http://localhost:8081/destination', { latitude: data.geonames[0].lat
+                            .then((data) => postData('http://localhost:8081/destination', {latitude: data.geonames[0].lat
                                                                                     , longitude: data.geonames[0].lng
                                                                                     , city: data.geonames[0].name
                                                                                     , country: data.geonames[0].countryCode}))

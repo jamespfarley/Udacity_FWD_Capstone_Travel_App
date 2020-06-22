@@ -6,8 +6,7 @@ import { getDestinationData, initSearchBtn } from './js/app'
 
 document.onreadystatechange = () => {
     if (document.readyState == 'interactive'){
-        //initSearchBtn();
-        console.log(`...index.js : ${document.readyState}`);
+        initSearchBtn();
     }
 }
 
