@@ -7,16 +7,19 @@
     <body>
         <div class="container">
             <div id="header">Travel Planner</div>
-            <div class="form">
+            <form class="form">
                 <label for="destination">Destination : </label><br>
                 <input id="destination" placeholder="Enter your destination i.e. Paris ..." required><span id="errMsg"></span><br><br>
+                <label for="departureDate">Departing : </label>
+                <input type="date" id="departureDate">
                 <button id="search" type="button">Take Me Away</button>
-            </div>
+            </form>
             <div id="entryHolder">
                 <span id=city></span>
                 <div class="output" id="city_lat"></div>
                 <div class="output" id="city_lng"></div>
                 <div class="output" id="country"></div>
+                <div class="output" id="daysTilDepart"></div>
             </div>
         </div>
         <script>
