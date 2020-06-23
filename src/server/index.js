@@ -29,12 +29,17 @@ const path = require('path');
 // Setup empty JS object to act as endpoint for all routes
 const projectData = {};
 
-// Callback function to complete GET '/all'
+// Callback function to serve homepage
 app.get('/destination', (req, res) => {
     // !!!
     console.log('... app.get : req.body = ' + JSON.stringify(req.body));
     res.sendFile(path.join(__dirname + "../../../dist/index.html"))
 });
+
+// Callback function to serve returned data
+app.get('/all', (req, res) =>{
+    res.send(projectData);
+})
 
 // Post Route
 app.post('/destination', addInfo);
