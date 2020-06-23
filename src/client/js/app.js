@@ -82,9 +82,10 @@ const postData = async (url, data) => {
 const updateUI = async () => {
                                 console.log('... app.js : updateUI()');
 
-                                const request = await fetch('http://localhost:8081/destination').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
+                                //const request = await fetch('http://localhost:8081/destination').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
+                                const request = await fetch('http://localhost:8081/all').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
                                 // !!!
-                                console.log(`updateUI : request object = ${JSON.stringify(request)}`);
+                                console.log(`updateUI : request object = ${request[0]}`);
                                 try{
                                     const data = await request.json();
 
@@ -99,4 +100,3 @@ const updateUI = async () => {
                                     console.error(`Error in updateUI() : ${error}`);
                                 }
 }
-
