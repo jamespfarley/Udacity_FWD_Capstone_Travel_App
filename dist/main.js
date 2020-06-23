@@ -177,9 +177,18 @@ function getDestinationData(){
                             // !!!
                             console.log('... app.js : getDestinationData()');
 
-                            const destination = 'Paris'; //document.getElementById('destination').value;
+                            let destination = document.getElementById('destination').value;
                             //!!!
                             console.log(`... getDestinationData() : destination = ${destination}`);
+
+                            let departureDate = document.getElementById('departureDate').value;
+                            let numDays = getDaysTilDeparture(departureDate);
+
+                            // !!!
+                            console.log(`... getDestinationData() : departureDate = ${departureDate}`);
+                            console.log(`... getDestinationData() : numDays = ${numDays}`);
+
+
                             document.getElementById('city').innerHTML = "";
                             document.getElementById('city_lat').innerHTML = "";
                             document.getElementById('city_lng').innerHTML = "";
@@ -191,9 +200,22 @@ function getDestinationData(){
                             .then((data) => postData('http://localhost:8081/destination', {latitude: data.geonames[0].lat
                                                                                     , longitude: data.geonames[0].lng
                                                                                     , city: data.geonames[0].name
-                                                                                    , country: data.geonames[0].countryCode}))
+                                                                                    , country: data.geonames[0].countryCode
+                                                                                    , diffInDays: numDays}))
                             .then(() => updateUI())
                             .catch((error) => {console.error(`getDestinationData() chained promises :: error: ${error}`)});
+}
+
+// Get number of days until departure
+function getDaysTilDeparture(dateValue){
+
+    const currentDate = new Date();
+
+    let departureDate = new Date(dateValue) ;
+
+    console.log(`Current date = ${currentDate} ... departureDate = ${departureDate}`);
+
+    return Math.trunc((departureDate.getTime() - currentDate.getTime()) / (1000*60*60*24));
 }
 
 
@@ -248,8 +270,7 @@ const updateUI = async () => {
 
                                 //const request = await fetch('http://localhost:8081/destination').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
                                 const request = await fetch('http://localhost:8081/all').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
-                                // !!!
-                                console.log(`updateUI : request object = ${request[0]}`);
+
                                 try{
                                     const data = await request.json();
 
@@ -260,6 +281,7 @@ const updateUI = async () => {
                                     document.getElementById('city_lat').innerHTML = data.latitude;
                                     document.getElementById('city_lng').innerHTML = data.longitude;
                                     document.getElementById('country').innerHTML = data.country;
+                                    document.getElementById('daysTilDepart').innerHTML = data.diffInDays
                                 } catch(error) {
                                     console.error(`Error in updateUI() : ${error}`);
                                 }
