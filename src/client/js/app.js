@@ -7,7 +7,7 @@ import { getDestinationImage, postPixabayCity } from './pixabay';
 const fetch = require('node-fetch');
 
 // Function to addEventListener to SEARCH button
-export function initSearchBtn(){
+export const initSearchBtn = () => {
     document.getElementById('search').addEventListener('click', getDestinationData);
 }
 
@@ -54,7 +54,7 @@ export function getDestinationData(){
 }
 
 // Get number of days until departure
-function getDaysTilDeparture(dateValue){
+const getDaysTilDeparture = (dateValue) => {
 
     const currentDate = new Date();
 
