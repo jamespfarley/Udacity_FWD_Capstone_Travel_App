@@ -1,4 +1,8 @@
 // https://www.npmjs.com/package/node-fetch
+
+import { getWeatherData } from './weather';
+import { getDestinationImage, postPixabayCity } from './pixabay';
+
 // a window.fetch compatible API on Node.js runtime
 const fetch = require('node-fetch');
 
@@ -33,11 +37,18 @@ export function getDestinationData(){
                             const geonamesURL = `http://api.geonames.org/searchJSON?username=${process.env.GEONAMES_ID}&lang=en&maxRows=1&style=short&name_equals=${destination}`
 
                             getCityData(geonamesURL)
+                            .then((data) => getWeatherData(data))
+                            .then((data) => postPixabayCity(data))
+                            .then((data) => getDestinationImage(data))
                             .then((data) => postData('http://localhost:8081/destination', {latitude: data.geonames[0].lat
                                                                                     , longitude: data.geonames[0].lng
                                                                                     , city: data.geonames[0].name
                                                                                     , country: data.geonames[0].countryCode
-                                                                                    , diffInDays: numDays}))
+                                                                                    , diffInDays: numDays
+                                                                                    , lo_temp: data.data[0].low_temp
+                                                                                    , hi_temp: data.data[0].high_temp
+                                                                                    , forecast: data.data[0].weather.description
+                                                                                    , image: data.imgUrl}))
                             .then(() => updateUI())
                             .catch((error) => {console.error(`getDestinationData() chained promises :: error: ${error}`)});
 }
@@ -74,7 +85,7 @@ const getCityData = async (url) => {
 
 
 /* Function to POST data */
-const postData = async (url, data) => {  
+export const postData = async (url, data) => {  
 
                                         // !!!
                                         console.log('... app.js : postData() :: data = ' + JSON.stringify(data));
@@ -106,6 +117,7 @@ const updateUI = async () => {
 
                                 //const request = await fetch('http://localhost:8081/destination').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
                                 const request = await fetch('http://localhost:8081/all').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
+                                const destinationImg = document.getElementById('image');
 
                                 try{
                                     const data = await request.json();
@@ -117,7 +129,12 @@ const updateUI = async () => {
                                     document.getElementById('city_lat').innerHTML = data.latitude;
                                     document.getElementById('city_lng').innerHTML = data.longitude;
                                     document.getElementById('country').innerHTML = data.country;
-                                    document.getElementById('daysTilDepart').innerHTML = data.diffInDays
+                                    document.getElementById('daysTilDepart').innerHTML = data.diffInDays;
+                                    document.getElementById('lo_temp').innerHTML = data.lo_temp;
+                                    document.getElementById('hi_temp').innerHTML = data.hi_temp;
+                                    document.getElementById('forecast').innerHTML = data.forecast;
+
+                                    destinationImg.setAttribute('src', data.image);
                                 } catch(error) {
                                     console.error(`Error in updateUI() : ${error}`);
                                 }
