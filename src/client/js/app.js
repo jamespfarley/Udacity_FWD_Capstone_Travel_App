@@ -1,22 +1,34 @@
 // https://www.npmjs.com/package/node-fetch
+
+import { getWeatherData } from './weather';
+import { getDestinationImage, postPixabayCity } from './pixabay';
+
 // a window.fetch compatible API on Node.js runtime
 const fetch = require('node-fetch');
 
 // Function to addEventListener to SEARCH button
-export function initSearchBtn(){
-    document.getElementById('search').addEventListener('click', getDestinationData(event));
+export const initSearchBtn = () => {
+    document.getElementById('search').addEventListener('click', getDestinationData);
 }
 
 /* Function called by event listener */
-export function getDestinationData(event){
-                            event.preventDefault();
+export function getDestinationData(){
 
                             // !!!
                             console.log('... app.js : getDestinationData()');
 
-                            const destination = document.getElementById('destination').value;
+                            let destination = document.getElementById('destination').value;
                             //!!!
                             console.log(`... getDestinationData() : destination = ${destination}`);
+
+                            let departureDate = document.getElementById('departureDate').value;
+                            let numDays = getDaysTilDeparture(departureDate);
+
+                            // !!!
+                            console.log(`... getDestinationData() : departureDate = ${departureDate}`);
+                            console.log(`... getDestinationData() : numDays = ${numDays}`);
+
+
                             document.getElementById('city').innerHTML = "";
                             document.getElementById('city_lat').innerHTML = "";
                             document.getElementById('city_lng').innerHTML = "";
@@ -25,12 +37,32 @@ export function getDestinationData(event){
                             const geonamesURL = `http://api.geonames.org/searchJSON?username=${process.env.GEONAMES_ID}&lang=en&maxRows=1&style=short&name_equals=${destination}`
 
                             getCityData(geonamesURL)
-                            .then((data) => postData('http://localhost:8081/destination', { latitude: data.geonames[0].lat
+                            .then((data) => getWeatherData(data))
+                            .then((data) => postPixabayCity(data))
+                            .then((data) => getDestinationImage(data))
+                            .then((data) => postData('http://localhost:8081/destination', {latitude: data.geonames[0].lat
                                                                                     , longitude: data.geonames[0].lng
                                                                                     , city: data.geonames[0].name
-                                                                                    , country: data.geonames[0].countryCode}))
+                                                                                    , country: data.geonames[0].countryCode
+                                                                                    , diffInDays: numDays
+                                                                                    , lo_temp: data.data[0].low_temp
+                                                                                    , hi_temp: data.data[0].high_temp
+                                                                                    , forecast: data.data[0].weather.description
+                                                                                    , image: data.imgUrl}))
                             .then(() => updateUI())
                             .catch((error) => {console.error(`getDestinationData() chained promises :: error: ${error}`)});
+}
+
+// Get number of days until departure
+const getDaysTilDeparture = (dateValue) => {
+
+    const currentDate = new Date();
+
+    let departureDate = new Date(dateValue) ;
+
+    console.log(`Current date = ${currentDate} ... departureDate = ${departureDate}`);
+
+    return Math.trunc((departureDate.getTime() - currentDate.getTime()) / (1000*60*60*24));
 }
 
 
@@ -53,7 +85,7 @@ const getCityData = async (url) => {
 
 
 /* Function to POST data */
-const postData = async (url, data) => {  
+export const postData = async (url, data) => {  
 
                                         // !!!
                                         console.log('... app.js : postData() :: data = ' + JSON.stringify(data));
@@ -83,9 +115,10 @@ const postData = async (url, data) => {
 const updateUI = async () => {
                                 console.log('... app.js : updateUI()');
 
-                                const request = await fetch('http://localhost:8081/destination').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
-                                // !!!
-                                console.log(`updateUI : request object = ${JSON.stringify(request)}`);
+                                //const request = await fetch('http://localhost:8081/destination').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
+                                const request = await fetch('http://localhost:8081/all').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
+                                const destinationImg = document.getElementById('image');
+
                                 try{
                                     const data = await request.json();
 
@@ -96,8 +129,13 @@ const updateUI = async () => {
                                     document.getElementById('city_lat').innerHTML = data.latitude;
                                     document.getElementById('city_lng').innerHTML = data.longitude;
                                     document.getElementById('country').innerHTML = data.country;
+                                    document.getElementById('daysTilDepart').innerHTML = data.diffInDays;
+                                    document.getElementById('lo_temp').innerHTML = data.lo_temp;
+                                    document.getElementById('hi_temp').innerHTML = data.hi_temp;
+                                    document.getElementById('forecast').innerHTML = data.forecast;
+
+                                    destinationImg.setAttribute('src', data.image);
                                 } catch(error) {
                                     console.error(`Error in updateUI() : ${error}`);
                                 }
 }
-

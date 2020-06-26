@@ -125,7 +125,7 @@ exports.Response = global.Response;
 /*!*****************************!*\
   !*** ./src/client/index.js ***!
   \*****************************/
-/*! exports provided: getDestinationData */
+/*! exports provided: getDestinationData, getWeatherData, postData, mergeObjects */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -133,8 +133,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/app */ "./src/client/js/app.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getDestinationData", function() { return _js_app__WEBPACK_IMPORTED_MODULE_0__["getDestinationData"]; });
 
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "postData", function() { return _js_app__WEBPACK_IMPORTED_MODULE_0__["postData"]; });
+
+/* harmony import */ var _js_weather__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/weather */ "./src/client/js/weather.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getWeatherData", function() { return _js_weather__WEBPACK_IMPORTED_MODULE_1__["getWeatherData"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mergeObjects", function() { return _js_weather__WEBPACK_IMPORTED_MODULE_1__["mergeObjects"]; });
+
 // import MAIN function from app javascript
 // import { function_name } from './path/to/JS/file'
+
+
+
+
 
 
 //import SCSS files
@@ -155,32 +166,47 @@ document.onreadystatechange = () => {
 /*!******************************!*\
   !*** ./src/client/js/app.js ***!
   \******************************/
-/*! exports provided: initSearchBtn, getDestinationData */
+/*! exports provided: initSearchBtn, getDestinationData, postData */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initSearchBtn", function() { return initSearchBtn; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDestinationData", function() { return getDestinationData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postData", function() { return postData; });
+/* harmony import */ var _weather__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./weather */ "./src/client/js/weather.js");
+/* harmony import */ var _pixabay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pixabay */ "./src/client/js/pixabay.js");
 // https://www.npmjs.com/package/node-fetch
+
+
+
+
 // a window.fetch compatible API on Node.js runtime
 const fetch = __webpack_require__(/*! node-fetch */ "./node_modules/node-fetch/browser.js");
 
 // Function to addEventListener to SEARCH button
-function initSearchBtn(){
-    document.getElementById('search').addEventListener('click', getDestinationData(event));
+const initSearchBtn = () => {
+    document.getElementById('search').addEventListener('click', getDestinationData);
 }
 
 /* Function called by event listener */
-function getDestinationData(event){
-                            event.preventDefault();
+function getDestinationData(){
 
                             // !!!
                             console.log('... app.js : getDestinationData()');
 
-                            const destination = document.getElementById('destination').value;
+                            let destination = document.getElementById('destination').value;
                             //!!!
                             console.log(`... getDestinationData() : destination = ${destination}`);
+
+                            let departureDate = document.getElementById('departureDate').value;
+                            let numDays = getDaysTilDeparture(departureDate);
+
+                            // !!!
+                            console.log(`... getDestinationData() : departureDate = ${departureDate}`);
+                            console.log(`... getDestinationData() : numDays = ${numDays}`);
+
+
                             document.getElementById('city').innerHTML = "";
                             document.getElementById('city_lat').innerHTML = "";
                             document.getElementById('city_lng').innerHTML = "";
@@ -189,12 +215,32 @@ function getDestinationData(event){
                             const geonamesURL = `http://api.geonames.org/searchJSON?username=${"jamespfarley"}&lang=en&maxRows=1&style=short&name_equals=${destination}`
 
                             getCityData(geonamesURL)
-                            .then((data) => postData('http://localhost:8081/destination', { latitude: data.geonames[0].lat
+                            .then((data) => Object(_weather__WEBPACK_IMPORTED_MODULE_0__["getWeatherData"])(data))
+                            .then((data) => Object(_pixabay__WEBPACK_IMPORTED_MODULE_1__["postPixabayCity"])(data))
+                            .then((data) => Object(_pixabay__WEBPACK_IMPORTED_MODULE_1__["getDestinationImage"])(data))
+                            .then((data) => postData('http://localhost:8081/destination', {latitude: data.geonames[0].lat
                                                                                     , longitude: data.geonames[0].lng
                                                                                     , city: data.geonames[0].name
-                                                                                    , country: data.geonames[0].countryCode}))
+                                                                                    , country: data.geonames[0].countryCode
+                                                                                    , diffInDays: numDays
+                                                                                    , lo_temp: data.data[0].low_temp
+                                                                                    , hi_temp: data.data[0].high_temp
+                                                                                    , forecast: data.data[0].weather.description
+                                                                                    , image: data.imgUrl}))
                             .then(() => updateUI())
                             .catch((error) => {console.error(`getDestinationData() chained promises :: error: ${error}`)});
+}
+
+// Get number of days until departure
+const getDaysTilDeparture = (dateValue) => {
+
+    const currentDate = new Date();
+
+    let departureDate = new Date(dateValue) ;
+
+    console.log(`Current date = ${currentDate} ... departureDate = ${departureDate}`);
+
+    return Math.trunc((departureDate.getTime() - currentDate.getTime()) / (1000*60*60*24));
 }
 
 
@@ -247,9 +293,10 @@ const postData = async (url, data) => {
 const updateUI = async () => {
                                 console.log('... app.js : updateUI()');
 
-                                const request = await fetch('http://localhost:8081/destination').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
-                                // !!!
-                                console.log(`updateUI : request object = ${JSON.stringify(request)}`);
+                                //const request = await fetch('http://localhost:8081/destination').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
+                                const request = await fetch('http://localhost:8081/all').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
+                                const destinationImg = document.getElementById('image');
+
                                 try{
                                     const data = await request.json();
 
@@ -260,12 +307,131 @@ const updateUI = async () => {
                                     document.getElementById('city_lat').innerHTML = data.latitude;
                                     document.getElementById('city_lng').innerHTML = data.longitude;
                                     document.getElementById('country').innerHTML = data.country;
+                                    document.getElementById('daysTilDepart').innerHTML = data.diffInDays;
+                                    document.getElementById('lo_temp').innerHTML = data.lo_temp;
+                                    document.getElementById('hi_temp').innerHTML = data.hi_temp;
+                                    document.getElementById('forecast').innerHTML = data.forecast;
+
+                                    destinationImg.setAttribute('src', data.image);
                                 } catch(error) {
                                     console.error(`Error in updateUI() : ${error}`);
                                 }
 }
 
+/***/ }),
 
+/***/ "./src/client/js/pixabay.js":
+/*!**********************************!*\
+  !*** ./src/client/js/pixabay.js ***!
+  \**********************************/
+/*! exports provided: getDestinationImage, postPixabayCity */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDestinationImage", function() { return getDestinationImage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postPixabayCity", function() { return postPixabayCity; });
+/* harmony import */ var _weather__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./weather */ "./src/client/js/weather.js");
+
+
+
+const getDestinationImage = async (data) => {
+
+                                        // !!!
+                                        console.log('... pixabay.js : getDestinationImage() :: data.geonames[0].name = ' + JSON.stringify(data.geonames[0].name));
+
+                                        const pixabayURL = 'http://localhost:8081/pixabay';
+
+                                        const response = await fetch(pixabayURL).catch( error => { console.log(`updateUI fetch() error: ${error}`)});
+                                        try{
+
+                                            const imgData = {};
+                                            const retData = await response.json();
+
+                                            // !!!
+                                            console.log('...  pixabay.js : getDestinationImage() :: data = ' + JSON.stringify(data));
+
+
+                                            imgData['imgUrl'] = retData.hits[0].previewURL;
+                                            // !!!
+                                            console.log('...  pixabay.js : getDestinationImage() :: imgData = ' + JSON.stringify(imgData));
+
+                                            return Object(_weather__WEBPACK_IMPORTED_MODULE_0__["mergeObjects"])(data, imgData);
+
+                                        } catch(error){
+                                            console.error(`Error in postData() : ${error}`);
+                                        }  
+}
+
+const postPixabayCity = async (data) => {
+
+                                        const pixabayURL = 'http://localhost:8081/pixabay';
+
+                                        console.log('... postPixabayCity : data.geonames[0].name = ' + data.geonames[0].name);
+
+                                        const paramObj = {};
+                                        paramObj['city'] = data.geonames[0].name;
+
+                                        const response = fetch(pixabayURL,
+                                                                { method: 'POST',
+                                                                  credentials: 'same-origin',
+                                                                  headers: {'Content-type':'application/json', },
+                                                                  body: JSON.stringify(paramObj)
+                                                                }).catch( 
+                                                                    error => { console.log(`postData() fetch() error: ${error}`)}
+                                                                );
+
+                                        return data;
+
+}
+
+/***/ }),
+
+/***/ "./src/client/js/weather.js":
+/*!**********************************!*\
+  !*** ./src/client/js/weather.js ***!
+  \**********************************/
+/*! exports provided: getWeatherData, mergeObjects */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeatherData", function() { return getWeatherData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mergeObjects", function() { return mergeObjects; });
+const weatherbitBaseURL = `https://api.weatherbit.io/v2.0/forecast/daily?key=${"bbe3b278fd8c4242aacd8dc4e541820d"}&lang=en&units=I&days=1`;
+
+// Get weather data
+const getWeatherData = async (data) => {
+    
+            let URL = `${weatherbitBaseURL}&city=${data.geonames[0].name}&country=${data.geonames[0].countryCode}`;
+
+            const response = await fetch(URL).catch( error => { console.log(`getWeatherData fetch() error: ${error}`)});
+            try{
+                const weatherData = await response.json();
+
+                // !!!
+                console.log('... weather.js : getWeatherData() :: weatherData =  ' + JSON.stringify(weatherData));
+
+                return mergeObjects(data, weatherData);
+
+            } catch (error) {
+                console.error(`Error in getWeatherData() : ${error}`);
+            }
+
+}
+
+function mergeObjects( object1, object2){
+
+    console.log('... mergeObjects() :: object1 = ' + JSON.stringify(object1) + ' ... object2 = ' + JSON.stringify(object2));
+
+    let dataObj = {   ...object1
+                    , ...object2 
+                };
+
+    console.log('... mergeObjects() :: dataObj = ' + JSON.stringify(dataObj));
+
+    return dataObj;
+}
 
 /***/ })
 
