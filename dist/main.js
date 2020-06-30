@@ -125,7 +125,7 @@ exports.Response = global.Response;
 /*!*****************************!*\
   !*** ./src/client/index.js ***!
   \*****************************/
-/*! exports provided: getDestinationData, getWeatherData, postData, mergeObjects */
+/*! exports provided: getDestinationData, getWeatherData, postData, mergeObjects, saveTripData, getTripData, clearTripData */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -140,8 +140,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "mergeObjects", function() { return _js_weather__WEBPACK_IMPORTED_MODULE_1__["mergeObjects"]; });
 
+/* harmony import */ var _js_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/storage */ "./src/client/js/storage.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "saveTripData", function() { return _js_storage__WEBPACK_IMPORTED_MODULE_2__["saveTripData"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getTripData", function() { return _js_storage__WEBPACK_IMPORTED_MODULE_2__["getTripData"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "clearTripData", function() { return _js_storage__WEBPACK_IMPORTED_MODULE_2__["clearTripData"]; });
+
 // import MAIN function from app javascript
 // import { function_name } from './path/to/JS/file'
+
+
 
 
 
@@ -176,7 +185,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postData", function() { return postData; });
 /* harmony import */ var _weather__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./weather */ "./src/client/js/weather.js");
 /* harmony import */ var _pixabay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pixabay */ "./src/client/js/pixabay.js");
+/* harmony import */ var _storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./storage */ "./src/client/js/storage.js");
 // https://www.npmjs.com/package/node-fetch
+
 
 
 
@@ -187,6 +198,8 @@ const fetch = __webpack_require__(/*! node-fetch */ "./node_modules/node-fetch/b
 // Function to addEventListener to SEARCH button
 const initSearchBtn = () => {
     document.getElementById('search').addEventListener('click', getDestinationData);
+    document.getElementById('save').addEventListener('click', _storage__WEBPACK_IMPORTED_MODULE_2__["saveTripData"])
+    document.getElementById('delete').addEventListener('click', _storage__WEBPACK_IMPORTED_MODULE_2__["clearTripData"])
 }
 
 /* Function called by event listener */
@@ -199,7 +212,9 @@ function getDestinationData(){
                             //!!!
                             console.log(`... getDestinationData() : destination = ${destination}`);
 
-                            let departureDate = document.getElementById('departureDate').value;
+
+                            let date = document.getElementById('departureDate').value;
+                            let departureDate = new Intl.DateTimeFormat('en-US', {month:"2-digit", day:"2-digit", year:"numeric"}).format(new Date(date + 'T00:00:00'));
                             let numDays = getDaysTilDeparture(departureDate);
 
                             // !!!
@@ -226,7 +241,8 @@ function getDestinationData(){
                                                                                     , lo_temp: data.data[0].low_temp
                                                                                     , hi_temp: data.data[0].high_temp
                                                                                     , forecast: data.data[0].weather.description
-                                                                                    , image: data.imgUrl}))
+                                                                                    , image: data.imgUrl
+                                                                                    , tripDate: departureDate}))
                             .then(() => updateUI())
                             .catch((error) => {console.error(`getDestinationData() chained promises :: error: ${error}`)});
 }
@@ -293,7 +309,6 @@ const postData = async (url, data) => {
 const updateUI = async () => {
                                 console.log('... app.js : updateUI()');
 
-                                //const request = await fetch('http://localhost:8081/destination').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
                                 const request = await fetch('http://localhost:8081/all').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
                                 const destinationImg = document.getElementById('image');
 
@@ -310,7 +325,8 @@ const updateUI = async () => {
                                     document.getElementById('daysTilDepart').innerHTML = data.diffInDays;
                                     document.getElementById('lo_temp').innerHTML = data.lo_temp;
                                     document.getElementById('hi_temp').innerHTML = data.hi_temp;
-                                    document.getElementById('forecast').innerHTML = data.forecast;
+                                    document.getElementById('forecast').innerHTML = data.forecast
+                                    document.getElementById('tripDate').innerHTML = data.tripDate;
 
                                     destinationImg.setAttribute('src', data.image);
                                 } catch(error) {
@@ -387,6 +403,81 @@ const postPixabayCity = async (data) => {
 
 /***/ }),
 
+/***/ "./src/client/js/storage.js":
+/*!**********************************!*\
+  !*** ./src/client/js/storage.js ***!
+  \**********************************/
+/*! exports provided: saveTripData, getTripData, clearTripData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveTripData", function() { return saveTripData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getTripData", function() { return getTripData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearTripData", function() { return clearTripData; });
+const locStorage = localStorage;
+
+const saveTripData = () => {
+
+    const savedData = {};
+    const idx = locStorage.length;
+
+    const elementList = document.querySelectorAll('.output');
+
+    for ( let i = 0; i < elementList.length; i++ ){
+        if ( elementList[i].id == 'image'){
+            savedData[elementList[i].id] = elementList[i].src;    
+        } else {
+            savedData[elementList[i].id] = elementList[i].innerText;
+        }
+    }
+
+    locStorage.setItem(JSON.stringify(idx), JSON.stringify(savedData));
+
+    for ( let j = 0; j < locStorage.length; j++ ){
+        console.log(`... idx = ${j}`);
+        console.log(JSON.parse(locStorage.getItem(JSON.stringify(j))));
+    }
+
+    // const tripDate = document.getElementById('tripDate');
+    // const city = document.getElementById('city');
+    // const country = document.getElementById('country');
+    // const longitude = document.getElementById('city_lng');
+    // const latitude = document.getElementById('city_lat');
+    // const image = document.getElementById('image');
+
+    
+
+    // locStorage.setItem(tripDate.id, tripDate.innerText);
+    // locStorage.setItem(city.id, city.innerText);
+    // locStorage.setItem(country.id, country.innerText);
+    // locStorage.setItem(longitude.id, longitude.innerText);
+    // locStorage.setItem(latitude.id, latitude.innerText);
+    // locStorage.setItem(image.id, image.src);
+}
+
+const getTripData = () => {
+
+    document.getElementById('tripDate').value = locStorage.getItem('tripDate');
+    document.getElementById('city').value = locStorage.getItem('city');
+    document.getElementById('country').value = locStorage.getItem('country');
+    document.getElementById('city_lng').value = locStorage.getItem('city_lng');
+    document.getElementById('city_lat').value = locStorage.getItem('city_lat');
+    document.getElementById('image').src = locStorage.getItem('image');
+   
+}
+
+const clearTripData = () => {
+
+    console.log(`locStorage count before clear = ${locStorage.length}`);
+
+    locStorage.clear();
+
+    console.log(`locStorage count after clear = ${locStorage.length}`);
+}
+
+/***/ }),
+
 /***/ "./src/client/js/weather.js":
 /*!**********************************!*\
   !*** ./src/client/js/weather.js ***!
@@ -398,11 +489,12 @@ const postPixabayCity = async (data) => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeatherData", function() { return getWeatherData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mergeObjects", function() { return mergeObjects; });
-const weatherbitBaseURL = `https://api.weatherbit.io/v2.0/forecast/daily?key=${"bbe3b278fd8c4242aacd8dc4e541820d"}&lang=en&units=I&days=1`;
 
 // Get weather data
 const getWeatherData = async (data) => {
-    
+
+            const weatherbitBaseURL = `https://api.weatherbit.io/v2.0/forecast/daily?key=${"bbe3b278fd8c4242aacd8dc4e541820d"}&lang=en&units=I&days=1`;
+
             let URL = `${weatherbitBaseURL}&city=${data.geonames[0].name}&country=${data.geonames[0].countryCode}`;
 
             const response = await fetch(URL).catch( error => { console.log(`getWeatherData fetch() error: ${error}`)});

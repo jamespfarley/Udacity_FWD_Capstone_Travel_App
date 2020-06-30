@@ -13,17 +13,20 @@
                 <label for="departureDate">Departing : </label>
                 <input type="date" id="departureDate">
                 <button id="search" type="button">Take Me Away</button>
+                <button id="save" type="button">Save Trip</button>
+                <button id="delete" type="button">Remove Trip</button>
             </form>
             <div id="entryHolder">
-                <span id=city></span>
+                <span class="output" id=city></span>
                 <div class="output" id="country"></div>
+                <div class="output" id="tripDate"></div>
                 <div class="output" id="daysTilDepart"></div>
                 <div class="output" id="city_lat"></div>
                 <div class="output" id="city_lng"></div>
                 <div class="output" id="lo_temp"></div>
                 <div class="output" id="hi_temp"></div>
                 <div class="output" id="forecast"></div>
-                <img src="" id="image" alt="Sorry, an image is not available" />
+                <img class="output" src="" id="image" alt="Sorry, an image is not available" />
             </div>
         </div>
         <script>
