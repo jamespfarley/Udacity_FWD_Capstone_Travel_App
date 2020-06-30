@@ -2,6 +2,7 @@
 
 import { getWeatherData } from './weather';
 import { getDestinationImage, postPixabayCity } from './pixabay';
+import { saveTripData, clearTripData } from './storage';
 
 // a window.fetch compatible API on Node.js runtime
 const fetch = require('node-fetch');
@@ -9,6 +10,8 @@ const fetch = require('node-fetch');
 // Function to addEventListener to SEARCH button
 export const initSearchBtn = () => {
     document.getElementById('search').addEventListener('click', getDestinationData);
+    document.getElementById('save').addEventListener('click', saveTripData)
+    document.getElementById('delete').addEventListener('click', clearTripData)
 }
 
 /* Function called by event listener */
@@ -21,7 +24,9 @@ export function getDestinationData(){
                             //!!!
                             console.log(`... getDestinationData() : destination = ${destination}`);
 
-                            let departureDate = document.getElementById('departureDate').value;
+
+                            let date = document.getElementById('departureDate').value;
+                            let departureDate = new Intl.DateTimeFormat('en-US', {month:"2-digit", day:"2-digit", year:"numeric"}).format(new Date(date + 'T00:00:00'));
                             let numDays = getDaysTilDeparture(departureDate);
 
                             // !!!
@@ -48,7 +53,8 @@ export function getDestinationData(){
                                                                                     , lo_temp: data.data[0].low_temp
                                                                                     , hi_temp: data.data[0].high_temp
                                                                                     , forecast: data.data[0].weather.description
-                                                                                    , image: data.imgUrl}))
+                                                                                    , image: data.imgUrl
+                                                                                    , tripDate: departureDate}))
                             .then(() => updateUI())
                             .catch((error) => {console.error(`getDestinationData() chained promises :: error: ${error}`)});
 }
@@ -115,7 +121,6 @@ export const postData = async (url, data) => {
 const updateUI = async () => {
                                 console.log('... app.js : updateUI()');
 
-                                //const request = await fetch('http://localhost:8081/destination').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
                                 const request = await fetch('http://localhost:8081/all').catch( error => { console.log(`updateUI fetch() error: ${error}`)});
                                 const destinationImg = document.getElementById('image');
 
@@ -132,7 +137,8 @@ const updateUI = async () => {
                                     document.getElementById('daysTilDepart').innerHTML = data.diffInDays;
                                     document.getElementById('lo_temp').innerHTML = data.lo_temp;
                                     document.getElementById('hi_temp').innerHTML = data.hi_temp;
-                                    document.getElementById('forecast').innerHTML = data.forecast;
+                                    document.getElementById('forecast').innerHTML = data.forecast
+                                    document.getElementById('tripDate').innerHTML = data.tripDate;
 
                                     destinationImg.setAttribute('src', data.image);
                                 } catch(error) {
