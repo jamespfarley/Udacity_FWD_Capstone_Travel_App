@@ -9,6 +9,10 @@ import { getWeatherData } from './js/weather'
 
 import { mergeObjects } from './js/weather'
 
+import { saveTripData
+        ,getTripData
+        ,clearTripData } from './js/storage'
+
 //import SCSS files
 
 document.onreadystatechange = () => {
@@ -22,5 +26,8 @@ export {
         , getWeatherData
         , postData
         , mergeObjects
+        , saveTripData
+        , getTripData
+        , clearTripData
     } 
 
