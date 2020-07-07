@@ -1,0 +1,14 @@
+/* * {
+    border: 1px red solid;
+} */
+
+.container {
+
+    display: grid;
+    grid-template-rows: 33vh 20vh 33vh;
+    grid-template-areas: 
+                        "head"
+                        "srch"
+                        "itin";
+}
+
