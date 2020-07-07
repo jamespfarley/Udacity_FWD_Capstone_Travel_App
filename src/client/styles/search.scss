@@ -1,0 +1,37 @@
+.search {
+    grid-area: srch;
+    padding: 10px 5px;
+}
+
+.search .criteria {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: 9vw 33vw;
+    grid-template-rows: repeat(3, 1fr);
+    grid-area: 
+            "lbl input"
+            "lbl input"
+            "btn btn"
+}
+
+#departureDate, #destination {
+    width: 20vw;
+}
+
+label {
+    grid-template-areas: lbl;
+    width: 9vw;
+    height: 3vh;
+    text-align: right;
+}
+
+input {
+    grid-template-areas: input;
+    height: 3vh;
+}
+
+button {
+    grid-template-areas: btn;
+    background-color: white;
+    border: 2px solid darkgrey;
+}
