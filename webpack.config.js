@@ -24,6 +24,10 @@ module.exports = {
             {
                 test: /\.scss$/,
                 loader: ['style-loader', 'css-loader', 'sass-loader']
+            },
+            {   // Added to accomodate .jpg
+                test: /\.jpg$/,
+                loader: 'file-loader'
             }
         ]
     },
