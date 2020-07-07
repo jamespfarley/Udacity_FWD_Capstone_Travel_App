@@ -8,10 +8,14 @@ import { saveTripData, clearTripData } from './storage';
 const fetch = require('node-fetch');
 
 // Function to addEventListener to SEARCH button
-export const initSearchBtn = () => {
+export const init = () => {
     document.getElementById('search').addEventListener('click', getDestinationData);
     document.getElementById('save').addEventListener('click', saveTripData)
     document.getElementById('delete').addEventListener('click', clearTripData)
+    document.getElementById("image").addEventListener("error", () => {
+        document.getElementById("image").setAttribute('src', '../media/globe.jpg');
+    });
+    document.getElementById("image").setAttribute('src', '../media/globe.jpg');
 }
 
 /* Function called by event listener */
