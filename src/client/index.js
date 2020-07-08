@@ -1,7 +1,7 @@
 // import MAIN function from app javascript
 // import { function_name } from './path/to/JS/file'
 import { getDestinationData
-        ,initBtns 
+        ,init
         ,postData 
         } from './js/app'
 
