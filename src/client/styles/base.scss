@@ -1,0 +1,18 @@
+/* * {
+    border: 1px red solid;
+} */
+
+// Google fonts
+@import url("https://fonts.googleapis.com/css?family=Oswald");
+@import url("https://fonts.googleapis.com/css?family=Raleway");
+
+.container {
+    display: grid;
+    gap: 5px;
+    grid-template-rows: 30vh 20vh 45vh;
+    grid-template-areas: 
+                        "head"
+                        "srch"
+                        "itin";
+}
+

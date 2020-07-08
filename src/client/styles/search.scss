@@ -1,0 +1,44 @@
+.search {
+    grid-area: srch;
+    padding: 10px 5px;
+    background-color: lightgrey;
+}
+
+.search .criteria {
+    font-family: Raleway;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 7vw 20.5vw;
+    grid-template-rows: repeat(3, 4vh);
+    grid-area: 
+            "lbl input"
+            "lbl input"
+            "btn btn"
+}
+
+#departureDate, #destination {
+    width: 20vw;
+}
+
+label {
+    grid-template-areas: lbl;
+    width: 9vw;
+    height: 3vh;
+    text-align: left;
+}
+
+input {
+    grid-template-areas: input;
+    height: 3vh;
+    font-family: Raleway;
+}
+
+#search {
+    grid-template-areas: btn;
+    grid-column: 2;
+    width: 10vw;
+    background-color: lightblue;
+    justify-self: end;
+    border: 2px solid darkgrey;
+    font-family: Raleway;
+}

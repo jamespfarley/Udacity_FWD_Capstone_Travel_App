@@ -1,0 +1,109 @@
+.itinerary {
+    grid-area: itin;
+    padding: 10px 5px;  
+    background-color: lightblue;
+    font-family: Raleway;
+}
+
+img {
+    height: 25vh;
+    width: 25vh;
+}
+
+button {
+    height: 5vh;
+    width: 7vw;
+    background-color: lightgrey;
+    border: 2px solid darkgrey;
+    font-family: Raleway;
+}
+
+.subItems {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: 15vw 15vw 12vw 12vw;
+    grid-template-rows: repeat(7, 3vh) 5vh 5vh;
+    grid-template-areas: 
+                "img dest dest dest"
+                "img date date date"
+                "img days days days"
+                "img lat lat lat"
+                "img lng lng lng"
+                "img txt fore fore"
+                "img tmp tmp tmp"
+                "img btn btn btn btn";
+}
+
+#image {
+    grid-area: img;
+    grid-row: 1 / 8;
+    grid-column: 1;
+}
+
+#dest {
+    grid-area: dest;
+    grid-row: 1;
+    grid-column: 2 / 2;
+}
+
+#tripDate {
+    grid-area: date;
+    grid-row: 2;
+    grid-column: 2;
+}
+
+
+#daysTilDepart {
+    grid-area: days;
+    grid-row: 3;
+    grid-column: 2;
+}
+
+#city_lat {
+    grid-area: lat;
+    grid-row: 4;
+    grid-column: 2;
+}
+
+#city_lng {
+    grid-area: lng;
+    grid-row: 5;
+    grid-column: 2;
+}
+
+#currForecast {
+    grid-area: txt;
+    grid-row: 6;
+    grid-column: 2;
+}
+
+#forecast {
+    grid-area: fore;
+    grid-row: 6;
+    grid-column: 3;
+}
+
+#lo_temp {
+    grid-area: tmp;
+    grid-row: 7;
+    grid-column: 3;
+}
+
+#hi_temp {
+    grid-area: tmp;
+    grid-row: 7;
+    grid-column: 4;
+}
+
+#save {
+    grid-area: btn;
+    grid-row: 8;
+    grid-column: 2;
+    justify-self: end;
+}
+
+#delete {
+    grid-area: btn;
+    grid-row: 8;
+    grid-column: 3;
+}

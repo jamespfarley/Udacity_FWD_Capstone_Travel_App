@@ -1,7 +1,7 @@
 // import MAIN function from app javascript
 // import { function_name } from './path/to/JS/file'
 import { getDestinationData
-        ,initSearchBtn 
+        ,init
         ,postData 
         } from './js/app'
 
@@ -14,10 +14,14 @@ import { saveTripData
         ,clearTripData } from './js/storage'
 
 //import SCSS files
+import './styles/base.scss'
+import './styles/header.scss'
+import './styles/search.scss'
+import './styles/itinerary.scss'
 
 document.onreadystatechange = () => {
     if (document.readyState == 'interactive'){
-        initSearchBtn();
+        init();
     }
 }
 
