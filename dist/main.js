@@ -97,8 +97,10 @@ var Client =
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Oswald);"]);
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Raleway);"]);
 // Module
-exports.push([module.i, "* {\n  border: 1px red solid; }\n\n.container {\n  display: grid;\n  grid-template-rows: 33vh 25vh 33vh;\n  grid-template-areas: \"head\" \"srch\" \"itin\"; }\n", ""]);
+exports.push([module.i, "/* * {\n    border: 1px red solid;\n} */\n.container {\n  display: grid;\n  gap: 5px;\n  grid-template-rows: 30vh 20vh 45vh;\n  grid-template-areas: \"head\" \"srch\" \"itin\"; }\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -119,7 +121,7 @@ var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__(/*! ../media/map_1.jpg *
 exports = ___CSS_LOADER_API_IMPORT___(false);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
 // Module
-exports.push([module.i, ".header {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  grid-area: head; }\n", ""]);
+exports.push([module.i, ".header {\n  grid-area: head;\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  font-size: 65px;\n  font-weight: bolder;\n  color: white;\n  font-family: Oswald; }\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -137,7 +139,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".itinerary {\n  grid-area: itin; }\n", ""]);
+exports.push([module.i, ".itinerary {\n  grid-area: itin;\n  padding: 10px 5px;\n  background-color: lightblue;\n  font-family: Raleway; }\n\nimg {\n  height: 25vh;\n  width: 25vh; }\n\nbutton {\n  height: 5vh;\n  width: 7vw;\n  background-color: lightgrey;\n  border: 2px solid darkgrey;\n  font-family: Raleway; }\n\n.subItems {\n  display: grid;\n  gap: 5px;\n  grid-template-columns: 15vw 15vw 12vw 12vw;\n  grid-template-rows: repeat(7, 3vh) 5vh 5vh;\n  grid-template-areas: \"img dest dest dest\" \"img date date date\" \"img days days days\" \"img lat lat lat\" \"img lng lng lng\" \"img txt fore fore\" \"img tmp tmp tmp\" \"img btn btn btn btn\"; }\n\n#image {\n  grid-area: img;\n  grid-row: 1 / 8;\n  grid-column: 1; }\n\n#dest {\n  grid-area: dest;\n  grid-row: 1;\n  grid-column: 2 / 2; }\n\n#tripDate {\n  grid-area: date;\n  grid-row: 2;\n  grid-column: 2; }\n\n#daysTilDepart {\n  grid-area: days;\n  grid-row: 3;\n  grid-column: 2; }\n\n#city_lat {\n  grid-area: lat;\n  grid-row: 4;\n  grid-column: 2; }\n\n#city_lng {\n  grid-area: lng;\n  grid-row: 5;\n  grid-column: 2; }\n\n#currForecast {\n  grid-area: txt;\n  grid-row: 6;\n  grid-column: 2; }\n\n#forecast {\n  grid-area: fore;\n  grid-row: 6;\n  grid-column: 3; }\n\n#lo_temp {\n  grid-area: tmp;\n  grid-row: 7;\n  grid-column: 3; }\n\n#hi_temp {\n  grid-area: tmp;\n  grid-row: 7;\n  grid-column: 4; }\n\n#save {\n  grid-area: btn;\n  grid-row: 8;\n  grid-column: 2;\n  justify-self: end; }\n\n#delete {\n  grid-area: btn;\n  grid-row: 8;\n  grid-column: 3; }\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -155,7 +157,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".search {\n  grid-area: srch; }\n", ""]);
+exports.push([module.i, ".search {\n  grid-area: srch;\n  padding: 10px 5px;\n  background-color: lightgrey; }\n\n.search .criteria {\n  font-family: Raleway;\n  display: grid;\n  gap: 10px;\n  grid-template-columns: 7vw 20.5vw;\n  grid-template-rows: repeat(3, 4vh);\n  grid-area: \"lbl input\" \"lbl input\" \"btn btn\"; }\n\n#departureDate, #destination {\n  width: 20vw; }\n\nlabel {\n  grid-template-areas: lbl;\n  width: 9vw;\n  height: 3vh;\n  text-align: left; }\n\ninput {\n  grid-template-areas: input;\n  height: 3vh;\n  font-family: Raleway; }\n\n#search {\n  grid-template-areas: btn;\n  grid-column: 2;\n  width: 10vw;\n  background-color: lightblue;\n  justify-self: end;\n  border: 2px solid darkgrey;\n  font-family: Raleway; }\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -678,7 +680,7 @@ __webpack_require__.r(__webpack_exports__);
 
 document.onreadystatechange = () => {
     if (document.readyState == 'interactive'){
-        Object(_js_app__WEBPACK_IMPORTED_MODULE_0__["initBtns"])();
+        Object(_js_app__WEBPACK_IMPORTED_MODULE_0__["init"])();
     }
 }
 
@@ -692,12 +694,12 @@ document.onreadystatechange = () => {
 /*!******************************!*\
   !*** ./src/client/js/app.js ***!
   \******************************/
-/*! exports provided: initBtns, getDestinationData, postData */
+/*! exports provided: init, getDestinationData, postData */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initBtns", function() { return initBtns; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "init", function() { return init; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDestinationData", function() { return getDestinationData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postData", function() { return postData; });
 /* harmony import */ var _weather__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./weather */ "./src/client/js/weather.js");
@@ -713,10 +715,14 @@ __webpack_require__.r(__webpack_exports__);
 const fetch = __webpack_require__(/*! node-fetch */ "./node_modules/node-fetch/browser.js");
 
 // Function to addEventListener to SEARCH button
-const initBtns = () => {
+const init = () => {
     document.getElementById('search').addEventListener('click', getDestinationData);
     document.getElementById('save').addEventListener('click', _storage__WEBPACK_IMPORTED_MODULE_2__["saveTripData"])
     document.getElementById('delete').addEventListener('click', _storage__WEBPACK_IMPORTED_MODULE_2__["clearTripData"])
+    //document.getElementById('image').setAttribute('src', '../media/globe.jpg');
+    //document.getElementById("image").addEventListener("error", () => {
+    //    document.getElementById("image").setAttribute('src', '../media/globe.jpg');
+    //});
 }
 
 /* Function called by event listener */
@@ -835,15 +841,17 @@ const updateUI = async () => {
                                     // !!!
                                     console.log('... app.js : updateUI() :: data = ' + JSON.stringify(data));
 
-                                    document.getElementById('city').innerHTML = data.city;
-                                    document.getElementById('city_lat').innerHTML = data.latitude;
-                                    document.getElementById('city_lng').innerHTML = data.longitude;
-                                    document.getElementById('country').innerHTML = data.country;
-                                    document.getElementById('daysTilDepart').innerHTML = data.diffInDays;
-                                    document.getElementById('lo_temp').innerHTML = data.lo_temp;
-                                    document.getElementById('hi_temp').innerHTML = data.hi_temp;
+                                    let destination = 'Your trip to ' + data.city + ', ' +  data.country;
+
+                                    document.getElementById('city').innerHTML = destination;
+                                    document.getElementById('tripDate').innerHTML = 'on ' + data.tripDate;
+                                    document.getElementById('daysTilDepart').innerHTML = 'is in ' + data.diffInDays + ' days.';
+                                    document.getElementById('city_lat').innerHTML = 'Latitude : ' + data.latitude;
+                                    document.getElementById('city_lng').innerHTML = 'Longitude : ' + data.longitude;
+                                    document.getElementById('currForecast').innerHTML = 'Current forecast : ';
                                     document.getElementById('forecast').innerHTML = data.forecast
-                                    document.getElementById('tripDate').innerHTML = data.tripDate;
+                                    document.getElementById('lo_temp').innerHTML = 'Low : ' + data.lo_temp;
+                                    document.getElementById('hi_temp').innerHTML = 'High : ' + data.hi_temp;
 
                                     destinationImg.setAttribute('src', data.image);
                                 } catch(error) {
