@@ -2,10 +2,14 @@
     border: 1px red solid;
 } */
 
-.container {
+// Google fonts
+@import url("https://fonts.googleapis.com/css?family=Oswald");
+@import url("https://fonts.googleapis.com/css?family=Raleway");
 
+.container {
     display: grid;
-    grid-template-rows: 33vh 20vh 33vh;
+    gap: 5px;
+    grid-template-rows: 30vh 20vh 45vh;
     grid-template-areas: 
                         "head"
                         "srch"
