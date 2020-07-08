@@ -12,10 +12,10 @@ export const init = () => {
     document.getElementById('search').addEventListener('click', getDestinationData);
     document.getElementById('save').addEventListener('click', saveTripData)
     document.getElementById('delete').addEventListener('click', clearTripData)
-    document.getElementById("image").addEventListener("error", () => {
-        document.getElementById("image").setAttribute('src', '../media/globe.jpg');
-    });
-    document.getElementById("image").setAttribute('src', '../media/globe.jpg');
+    //document.getElementById('image').setAttribute('src', '../media/globe.jpg');
+    //document.getElementById("image").addEventListener("error", () => {
+    //    document.getElementById("image").setAttribute('src', '../media/globe.jpg');
+    //});
 }
 
 /* Function called by event listener */
@@ -134,15 +134,17 @@ const updateUI = async () => {
                                     // !!!
                                     console.log('... app.js : updateUI() :: data = ' + JSON.stringify(data));
 
-                                    document.getElementById('city').innerHTML = data.city;
-                                    document.getElementById('city_lat').innerHTML = data.latitude;
-                                    document.getElementById('city_lng').innerHTML = data.longitude;
-                                    document.getElementById('country').innerHTML = data.country;
-                                    document.getElementById('daysTilDepart').innerHTML = data.diffInDays;
-                                    document.getElementById('lo_temp').innerHTML = data.lo_temp;
-                                    document.getElementById('hi_temp').innerHTML = data.hi_temp;
+                                    let destination = 'Your trip to ' + data.city + ', ' +  data.country;
+
+                                    document.getElementById('city').innerHTML = destination;
+                                    document.getElementById('tripDate').innerHTML = 'on ' + data.tripDate;
+                                    document.getElementById('daysTilDepart').innerHTML = 'is in ' + data.diffInDays + ' days.';
+                                    document.getElementById('city_lat').innerHTML = 'Latitude : ' + data.latitude;
+                                    document.getElementById('city_lng').innerHTML = 'Longitude : ' + data.longitude;
+                                    document.getElementById('currForecast').innerHTML = 'Current forecast : ';
                                     document.getElementById('forecast').innerHTML = data.forecast
-                                    document.getElementById('tripDate').innerHTML = data.tripDate;
+                                    document.getElementById('lo_temp').innerHTML = 'Low : ' + data.lo_temp;
+                                    document.getElementById('hi_temp').innerHTML = 'High : ' + data.hi_temp;
 
                                     destinationImg.setAttribute('src', data.image);
                                 } catch(error) {
