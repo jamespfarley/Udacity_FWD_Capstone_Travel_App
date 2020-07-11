@@ -1,9 +1,12 @@
-const locStorage = localStorage;
+import { json } from "body-parser";
+
+const tripHistory = window.localStorage;
+const key = 'trip' + tripHistory.length;
 
 export const saveTripData = () => {
 
     const savedData = {};
-    const idx = locStorage.length;
+
 
     const elementList = document.querySelectorAll('.output');
 
@@ -11,34 +14,52 @@ export const saveTripData = () => {
         if ( elementList[i].id == 'image'){
             savedData[elementList[i].id] = elementList[i].src;    
         } else {
-            savedData[elementList[i].id] = elementList[i].innerText;
+            savedData[elementList[i].id] = elementList[i].innerHTML;
         }
     }
 
-    locStorage.setItem(JSON.stringify(idx), JSON.stringify(savedData));
+    console.log(savedData);
+    console.log('... key = ' + key);
 
-    for ( let j = 0; j < locStorage.length; j++ ){
-        console.log(`... idx = ${j}`);
-        console.log(JSON.parse(locStorage.getItem(JSON.stringify(j))));
-    }
+    tripHistory.setItem(JSON.stringify(key), JSON.stringify(savedData));
+
 }
 
 export const getTripData = () => {
 
-    document.getElementById('tripDate').value = locStorage.getItem('tripDate');
-    document.getElementById('city').value = locStorage.getItem('city');
-    document.getElementById('country').value = locStorage.getItem('country');
-    document.getElementById('city_lng').value = locStorage.getItem('city_lng');
-    document.getElementById('city_lat').value = locStorage.getItem('city_lat');
-    document.getElementById('image').src = locStorage.getItem('image');
-   
+    let tripJSON = tripHistory.getItem(JSON.stringify(key));
+    let tripObj = JSON.parse(tripJSON);
+
+    document.getElementById('tripDate').innerHTML = tripObj.tripDate;
+    document.getElementById('city').innerHTML = tripObj.city;
+    document.getElementById('daysTilDepart').innerHTML = tripObj.daysTilDepart;
+    document.getElementById('city_lng').innerHTML = tripObj.city_lng;
+    document.getElementById('city_lat').innerHTML = tripObj.city_lat;
+    document.getElementById('image').src = tripObj.image;
+  
 }
 
 export const clearTripData = () => {
 
-    console.log(`locStorage count before clear = ${locStorage.length}`);
+    console.log(`tripHistory count before clear = ${tripHistory.length}`);
 
-    locStorage.clear();
+    tripHistory.clear();
 
-    console.log(`locStorage count after clear = ${locStorage.length}`);
+    console.log(`tripHistory count after clear = ${tripHistory.length}`);
+
+    deleteItinerary();
+}
+
+export const deleteItinerary = () => {
+
+    document.getElementById('city').innerHTML = "";
+    document.getElementById('city_lat').innerHTML = "";
+    document.getElementById('city_lng').innerHTML = "";
+    document.getElementById('country').innerHTML = "";
+    document.getElementById('daysTilDepart').innerHTML = "";
+    document.getElementById('tripDate').innerHTML = "";
+    document.getElementById('lo_temp').innerHTML = "";
+    document.getElementById('hi_temp').innerHTML = "";
+    document.getElementById('currForecast').innerHTML = "";
+    document.getElementById('forecast').innerHTML = "";
 }

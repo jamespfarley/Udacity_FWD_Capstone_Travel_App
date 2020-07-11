@@ -10,9 +10,9 @@
             <div class="search">
                 <div class="criteria">
                     <label for="destination">Destination : </label>
-                    <input id="destination" placeholder="Enter your destination i.e. Paris ..." required> <!--<span id="errMsg"></span><br><br>-->
+                    <input id="destination" placeholder="Enter your destination i.e. Paris ..." required><span class="err" id="cityErrMsg"></span>
                     <label for="departureDate">Departing : </label>
-                    <input type="date" id="departureDate">
+                    <input type="date" id="departureDate" required><span class="err" id="dateErrMsg"></span>
                     <button id="search" type="button">Take Me Away</button>
                 </div>
             </div>

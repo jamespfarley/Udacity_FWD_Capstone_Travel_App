@@ -2,7 +2,7 @@
 
 import { getWeatherData } from './weather';
 import { getDestinationImage, postPixabayCity } from './pixabay';
-import { saveTripData, clearTripData } from './storage';
+import { saveTripData, clearTripData, deleteItinerary, getTripData } from './storage';
 
 // a window.fetch compatible API on Node.js runtime
 const fetch = require('node-fetch');
@@ -16,6 +16,11 @@ export const init = () => {
     //document.getElementById("image").addEventListener("error", () => {
     //    document.getElementById("image").setAttribute('src', '../media/globe.jpg');
     //});
+
+    // Fetch saved trip data
+    if ( localStorage.length > 0 ){
+        getTripData();
+    }
 }
 
 /* Function called by event listener */
@@ -24,24 +29,41 @@ export function getDestinationData(){
                             // !!!
                             console.log('... app.js : getDestinationData()');
 
+                            // City validation
                             let destination = document.getElementById('destination').value;
+                            if ( destination === "" || /[0-9]|[!@#$%^&*()_\-+=:";\'<>?,./]/.test(destination)){
+
+                                document.getElementById("cityErrMsg").innerHTML = "Please enter a valid city ..."
+                                return;
+                            } else {
+                                document.getElementById("cityErrMsg").innerHTML = "";
+                            }
                             //!!!
                             console.log(`... getDestinationData() : destination = ${destination}`);
 
-
+                            // Date validation
                             let date = document.getElementById('departureDate').value;
+                            if ( date === "" ){
+
+                                document.getElementById("dateErrMsg").innerHTML = "Please enter a departure date ..."
+                                return;
+                            }
+
                             let departureDate = new Intl.DateTimeFormat('en-US', {month:"2-digit", day:"2-digit", year:"numeric"}).format(new Date(date + 'T00:00:00'));
                             let numDays = getDaysTilDeparture(departureDate);
+                            if ( numDays < 0 ){
+
+                                document.getElementById("dateErrMsg").innerHTML = "Please enter a future departure date ..."
+                                return;
+                            } else {
+                                document.getElementById("dateErrMsg").innerHTML = "";
+                            }                           
 
                             // !!!
                             console.log(`... getDestinationData() : departureDate = ${departureDate}`);
                             console.log(`... getDestinationData() : numDays = ${numDays}`);
 
-
-                            document.getElementById('city').innerHTML = "";
-                            document.getElementById('city_lat').innerHTML = "";
-                            document.getElementById('city_lng').innerHTML = "";
-                            document.getElementById('country').innerHTML = "";
+                            deleteItinerary();
 
                             const geonamesURL = `http://api.geonames.org/searchJSON?username=${process.env.GEONAMES_ID}&lang=en&maxRows=1&style=short&name_equals=${destination}`
 
@@ -61,6 +83,7 @@ export function getDestinationData(){
                                                                                     , tripDate: departureDate}))
                             .then(() => updateUI())
                             .catch((error) => {console.error(`getDestinationData() chained promises :: error: ${error}`)});
+                            
 }
 
 // Get number of days until departure

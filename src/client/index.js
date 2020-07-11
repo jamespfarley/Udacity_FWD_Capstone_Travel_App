@@ -11,7 +11,8 @@ import { mergeObjects } from './js/weather'
 
 import { saveTripData
         ,getTripData
-        ,clearTripData } from './js/storage'
+        ,clearTripData
+        ,deleteItinerary } from './js/storage'
 
 //import SCSS files
 import './styles/base.scss'
@@ -33,5 +34,6 @@ export {
         , saveTripData
         , getTripData
         , clearTripData
+        , deleteItinerary
     } 
 

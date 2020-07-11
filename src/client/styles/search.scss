@@ -8,12 +8,12 @@
     font-family: Raleway;
     display: grid;
     gap: 10px;
-    grid-template-columns: 7vw 20.5vw;
+    grid-template-columns: 7vw 20.5vw 30vw;
     grid-template-rows: repeat(3, 4vh);
     grid-area: 
-            "lbl input"
-            "lbl input"
-            "btn btn"
+            "lbl input err"
+            "lbl input err"
+            "btn btn err"
 }
 
 #departureDate, #destination {
@@ -31,6 +31,7 @@ input {
     grid-template-areas: input;
     height: 3vh;
     font-family: Raleway;
+    font-size: medium;
 }
 
 #search {
@@ -41,4 +42,25 @@ input {
     justify-self: end;
     border: 2px solid darkgrey;
     font-family: Raleway;
+}
+
+
+input:invalid:required {
+    border: 2px solid red;
+}
+
+.err {
+    grid-area: err;
+    font-family: Raleway;
+    color: red;
+}
+
+#cityErrMsg {
+    grid-row: 1; 
+    grid-column: 3;
+}
+
+#dateErrMsg {
+    grid-row: 2; 
+    grid-column: 3;
 }
