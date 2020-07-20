@@ -13,7 +13,7 @@ const app = express();
 const bodyParser = require('body-parser');
 
 // Middleware
-// Configure Express to user body-parser
+// Configure Express to use body-parser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
