@@ -1,5 +1,3 @@
-import { json } from "body-parser";
-
 const tripHistory = window.localStorage;
 const key = 'trip' + tripHistory.length;
 
