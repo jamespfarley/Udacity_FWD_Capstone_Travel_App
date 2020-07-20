@@ -14,6 +14,8 @@ import { saveTripData
         ,clearTripData
         ,deleteItinerary } from './js/storage'
 
+import { UserException } from './js/exception'
+
 //import SCSS files
 import './styles/base.scss'
 import './styles/header.scss'
@@ -35,5 +37,6 @@ export {
         , getTripData
         , clearTripData
         , deleteItinerary
+        , UserException
     } 
 
