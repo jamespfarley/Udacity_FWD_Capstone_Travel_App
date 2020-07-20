@@ -1,3 +1,4 @@
+import { UserException } from './exception';
 
 // Get weather data
 export const getWeatherData = async (data) => {
@@ -16,7 +17,7 @@ export const getWeatherData = async (data) => {
                 return mergeObjects(data, weatherData);
 
             } catch (error) {
-                console.error(`Error in getWeatherData() : ${error}`);
+                throw new UserException('weather', `getWeatherData() ... ${error}`);
             }
 
 }
