@@ -1,21 +1,22 @@
-// https://www.npmjs.com/package/node-fetch
 
 import { getWeatherData } from './weather';
 import { getDestinationImage, postPixabayCity } from './pixabay';
 import { saveTripData, clearTripData, deleteItinerary, getTripData } from './storage';
+import { UserException } from './exception';
+import defaultImg from '../media/globe.jpg';
 
+// https://www.npmjs.com/package/node-fetch
 // a window.fetch compatible API on Node.js runtime
 const fetch = require('node-fetch');
 
-// Function to addEventListener to SEARCH button
+// Page initialization
 export const init = () => {
     document.getElementById('search').addEventListener('click', getDestinationData);
     document.getElementById('save').addEventListener('click', saveTripData)
     document.getElementById('delete').addEventListener('click', clearTripData)
-    //document.getElementById('image').setAttribute('src', '../media/globe.jpg');
-    //document.getElementById("image").addEventListener("error", () => {
-    //    document.getElementById("image").setAttribute('src', '../media/globe.jpg');
-    //});
+
+    // Default image
+    document.getElementById('image').setAttribute('src', defaultImg);
 
     // Fetch saved trip data
     if ( localStorage.length > 0 ){
@@ -32,7 +33,6 @@ export function getDestinationData(){
                             // City validation
                             let destination = document.getElementById('destination').value;
                             if ( destination === "" || /[0-9]|[!@#$%^&*()_\-+=:";\'<>?,./]/.test(destination)){
-
                                 document.getElementById("cityErrMsg").innerHTML = "Please enter a valid city ..."
                                 return;
                             } else {
@@ -44,7 +44,6 @@ export function getDestinationData(){
                             // Date validation
                             let date = document.getElementById('departureDate').value;
                             if ( date === "" ){
-
                                 document.getElementById("dateErrMsg").innerHTML = "Please enter a departure date ..."
                                 return;
                             }
@@ -52,7 +51,6 @@ export function getDestinationData(){
                             let departureDate = new Intl.DateTimeFormat('en-US', {month:"2-digit", day:"2-digit", year:"numeric"}).format(new Date(date + 'T00:00:00'));
                             let numDays = getDaysTilDeparture(departureDate);
                             if ( numDays < 0 ){
-
                                 document.getElementById("dateErrMsg").innerHTML = "Please enter a future departure date ..."
                                 return;
                             } else {
@@ -63,11 +61,12 @@ export function getDestinationData(){
                             console.log(`... getDestinationData() : departureDate = ${departureDate}`);
                             console.log(`... getDestinationData() : numDays = ${numDays}`);
 
+                            // Clear UI
                             deleteItinerary();
 
                             const geonamesURL = `http://api.geonames.org/searchJSON?username=${process.env.GEONAMES_ID}&lang=en&maxRows=1&style=short&name_equals=${destination}`
 
-                            getCityData(geonamesURL)
+                            getCityData(geonamesURL, destination)
                             .then((data) => getWeatherData(data))
                             .then((data) => postPixabayCity(data))
                             .then((data) => getDestinationImage(data))
@@ -82,7 +81,7 @@ export function getDestinationData(){
                                                                                     , image: data.imgUrl
                                                                                     , tripDate: departureDate}))
                             .then(() => updateUI())
-                            .catch((error) => {console.error(`getDestinationData() chained promises :: error: ${error}`)});
+                            .catch((e) => {console.error('ERROR : getDestinationData() chained promises :: ' + e.moduleName + ' ... ' + e.errorMsg)});
                             
 }
 
@@ -98,9 +97,8 @@ const getDaysTilDeparture = (dateValue) => {
     return Math.trunc((departureDate.getTime() - currentDate.getTime()) / (1000*60*60*24));
 }
 
-
 /* Function to GET Web API Data*/
-const getCityData = async (url) => {
+const getCityData = async (url, city) => {
                                     // !!!
                                     console.log('... app.js : getCityData()');
 
@@ -110,9 +108,15 @@ const getCityData = async (url) => {
                                         // !!!
                                         console.log('app.js : getCityData() :: cityData = ' + JSON.stringify(cityData));
 
+                                        if ( cityData.totalResultsCount == 0 ){
+                                            document.getElementById('city').innerHTML = `Sorry, there is no information available for ${city} ...`;
+                                            throw new UserException('city', 'getCityData() ... No data available');
+                                        }
+                                            
                                         return cityData;
+                                        
                                     } catch(error) {
-                                        console.error(`Error in getCityData() : ${error}`);
+                                        throw new UserException('getCityData()', error);
                                     }
 }
 
@@ -171,6 +175,6 @@ const updateUI = async () => {
 
                                     destinationImg.setAttribute('src', data.image);
                                 } catch(error) {
-                                    console.error(`Error in updateUI() : ${error}`);
+                                    throw new UserException('UI', `updateUI() ... ${error}`)
                                 }
 }
