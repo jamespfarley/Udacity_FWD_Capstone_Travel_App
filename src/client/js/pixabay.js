@@ -1,4 +1,6 @@
 import { mergeObjects } from "./weather";
+import defaultImg from '../media/globe.jpg';
+import { UserException } from './exception';
 
 
 export const getDestinationImage = async (data) => {
@@ -16,16 +18,21 @@ export const getDestinationImage = async (data) => {
 
                                             // !!!
                                             console.log('...  pixabay.js : getDestinationImage() :: data = ' + JSON.stringify(data));
+                                            console.log('...  pixabay.js : getDestinationImage() :: imgData.total = ' + JSON.stringify(retData.total));
 
+                                            if ( retData.total > 0) {
+                                                imgData['imgUrl'] = retData.hits[0].previewURL;
+                                            } else {
+                                                imgData['imgUrl'] = defaultImg;
+                                            }
 
-                                            imgData['imgUrl'] = retData.hits[0].previewURL;
                                             // !!!
                                             console.log('...  pixabay.js : getDestinationImage() :: imgData = ' + JSON.stringify(imgData));
 
                                             return mergeObjects(data, imgData);
 
                                         } catch(error){
-                                            console.error(`Error in postData() : ${error}`);
+                                            throw new UserException('pixabay', `getDestinationImage() ... ${error}`)
                                         }  
 }
 
@@ -44,7 +51,9 @@ export const postPixabayCity = async (data) => {
                                                                   headers: {'Content-type':'application/json', },
                                                                   body: JSON.stringify(paramObj)
                                                                 }).catch( 
-                                                                    error => { console.log(`postData() fetch() error: ${error}`)}
+                                                                    error => {
+                                                                                throw new UserExcption('pixabay', `postPixabayCity() fetch() error: ${error}`)
+                                                                             }
                                                                 );
 
                                         return data;
