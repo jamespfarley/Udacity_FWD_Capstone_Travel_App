@@ -139,7 +139,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".itinerary {\n  grid-area: itin;\n  padding: 10px 5px;\n  background-color: lightblue;\n  font-family: Raleway; }\n\nimg {\n  height: 25vh;\n  width: 25vh; }\n\nbutton {\n  height: 5vh;\n  width: 7vw;\n  background-color: lightgrey;\n  border: 2px solid darkgrey;\n  font-family: Raleway; }\n\n.subItems {\n  display: grid;\n  gap: 5px;\n  grid-template-columns: 15vw 15vw 10vw 15vw 15vw;\n  grid-template-rows: repeat(7, 3vh) 5vh 5vh;\n  grid-template-areas: \"img dest dest dest dest\" \"img date date date date\" \"img days days days days\" \"img lat lat lat lat\" \"img lng lng lng lng\" \"img txt fore fore fore\" \"img tmp tmp tmp tmp\" \"img btn btn btn btn btn\"; }\n\n#image {\n  grid-area: img;\n  grid-row: 1 / 8;\n  grid-column: 1; }\n\n#city {\n  grid-area: dest;\n  grid-row: 1;\n  grid-column: 2 / 5; }\n\n#tripDate {\n  grid-area: date;\n  grid-row: 2;\n  grid-column: 2; }\n\n#daysTilDepart {\n  grid-area: days;\n  grid-row: 3;\n  grid-column: 2; }\n\n#city_lat {\n  grid-area: lat;\n  grid-row: 4;\n  grid-column: 2; }\n\n#city_lng {\n  grid-area: lng;\n  grid-row: 5;\n  grid-column: 2; }\n\n#currForecast {\n  grid-area: txt;\n  grid-row: 6;\n  grid-column: 2; }\n\n#forecast {\n  grid-area: fore;\n  grid-row: 6;\n  grid-column: 3 /-1; }\n\n#lo_temp {\n  grid-area: tmp;\n  grid-row: 7;\n  grid-column: 3; }\n\n#hi_temp {\n  grid-area: tmp;\n  grid-row: 7;\n  grid-column: 4; }\n\n#save {\n  grid-area: btn;\n  grid-row: 8;\n  grid-column: 2;\n  justify-self: end; }\n\n#delete {\n  grid-area: btn;\n  grid-row: 8;\n  grid-column: 3; }\n", ""]);
+exports.push([module.i, ".itinerary {\n  grid-area: itin;\n  padding: 10px 5px;\n  background-color: lightblue;\n  font-family: Raleway; }\n\nimg {\n  height: 25vh;\n  width: 25vh; }\n\nbutton {\n  height: 5vh;\n  width: 7vw;\n  background-color: lightgrey;\n  border: 2px solid darkgrey;\n  font-family: Raleway; }\n\n.subItems {\n  display: grid;\n  gap: 5px;\n  grid-template-columns: 15vw 15vw 10vw 15vw 15vw;\n  grid-template-rows: repeat(7, 3vh) 5vh 5vh;\n  grid-template-areas: \"img dest dest dest dest\" \"img date date date date\" \"img days days days days\" \"img lat lat lat lat\" \"img lng lng lng lng\" \"img txt fore fore fore\" \"img tmp tmp tmp tmp\" \"img btn btn btn btn btn\"; }\n\n#image {\n  grid-area: img;\n  grid-row: 1 / 8;\n  grid-column: 1; }\n\n#city {\n  grid-area: dest;\n  grid-row: 1;\n  grid-column: 2 / 5; }\n\n#tripDate {\n  grid-area: date;\n  grid-row: 2;\n  grid-column: 2; }\n\n#daysTilDepart {\n  grid-area: days;\n  grid-row: 3;\n  grid-column: 2; }\n\n#city_lat {\n  grid-area: lat;\n  grid-row: 4;\n  grid-column: 2 / -2; }\n\n#city_lng {\n  grid-area: lng;\n  grid-row: 5;\n  grid-column: 2 / -2; }\n\n#currForecast {\n  grid-area: txt;\n  grid-row: 6;\n  grid-column: 2; }\n\n#forecast {\n  grid-area: fore;\n  grid-row: 6;\n  grid-column: 3 /-1; }\n\n#lo_temp {\n  grid-area: tmp;\n  grid-row: 7;\n  grid-column: 3; }\n\n#hi_temp {\n  grid-area: tmp;\n  grid-row: 7;\n  grid-column: 4; }\n\n#save {\n  grid-area: btn;\n  grid-row: 8;\n  grid-column: 2;\n  justify-self: end; }\n\n#delete {\n  grid-area: btn;\n  grid-row: 8;\n  grid-column: 3; }\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -632,13 +632,17 @@ module.exports = function (list, options) {
 /*!*****************************!*\
   !*** ./src/client/index.js ***!
   \*****************************/
-/*! exports provided: getDestinationData, getWeatherData, postData, mergeObjects, saveTripData, getTripData, clearTripData, deleteItinerary, UserException */
+/*! exports provided: getDestinationData, getCityData, getDaysTilDeparture, getWeatherData, postData, mergeObjects, saveTripData, getTripData, clearTripData, deleteItinerary, UserException */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/app */ "./src/client/js/app.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getDestinationData", function() { return _js_app__WEBPACK_IMPORTED_MODULE_0__["getDestinationData"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getCityData", function() { return _js_app__WEBPACK_IMPORTED_MODULE_0__["getCityData"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getDaysTilDeparture", function() { return _js_app__WEBPACK_IMPORTED_MODULE_0__["getDaysTilDeparture"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "postData", function() { return _js_app__WEBPACK_IMPORTED_MODULE_0__["postData"]; });
 
@@ -701,13 +705,15 @@ document.onreadystatechange = () => {
 /*!******************************!*\
   !*** ./src/client/js/app.js ***!
   \******************************/
-/*! exports provided: init, getDestinationData, postData */
+/*! exports provided: init, getDestinationData, getDaysTilDeparture, getCityData, postData */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "init", function() { return init; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDestinationData", function() { return getDestinationData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDaysTilDeparture", function() { return getDaysTilDeparture; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCityData", function() { return getCityData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postData", function() { return postData; });
 /* harmony import */ var _weather__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./weather */ "./src/client/js/weather.js");
 /* harmony import */ var _pixabay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pixabay */ "./src/client/js/pixabay.js");
@@ -895,6 +901,8 @@ const updateUI = async () => {
                                 }
 }
 
+
+
 /***/ }),
 
 /***/ "./src/client/js/exception.js":
@@ -982,7 +990,7 @@ const postPixabayCity = async (data) => {
                                                                   body: JSON.stringify(paramObj)
                                                                 }).catch( 
                                                                     error => {
-                                                                                throw new UserExcption('pixabay', `postPixabayCity() fetch() error: ${error}`)
+                                                                                throw new _exception__WEBPACK_IMPORTED_MODULE_2__["UserException"]('pixabay', `postPixabayCity() fetch() error: ${error}`)
                                                                              }
                                                                 );
 
