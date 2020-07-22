@@ -43,19 +43,3 @@ export const validateDate = (date) => {
     }
 }
 
-
-// Get number of days until departure
-const getDaysTilDeparture = (dateValue) => {
-
-    let numDays = 0;
-
-    const currentDate = new Date();
-
-    let departureDate = new Date(dateValue) ;
-
-    numDays = Math.trunc((departureDate.getTime() - currentDate.getTime()) / (1000*60*60*24));
-
-    if ( numDays )
-
-    return;
-}
