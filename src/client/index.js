@@ -1,6 +1,8 @@
 // import MAIN function from app javascript
 // import { function_name } from './path/to/JS/file'
 import { getDestinationData
+        ,getCityData
+        ,getDaysTilDeparture
         ,init
         ,postData 
         } from './js/app'
@@ -30,6 +32,8 @@ document.onreadystatechange = () => {
 
 export { 
         getDestinationData
+        , getCityData
+        , getDaysTilDeparture
         , getWeatherData
         , postData
         , mergeObjects

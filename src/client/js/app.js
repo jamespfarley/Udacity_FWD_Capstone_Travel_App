@@ -86,7 +86,7 @@ export function getDestinationData(){
 }
 
 // Get number of days until departure
-const getDaysTilDeparture = (dateValue) => {
+export const getDaysTilDeparture = (dateValue) => {
 
     const currentDate = new Date();
 
@@ -98,7 +98,7 @@ const getDaysTilDeparture = (dateValue) => {
 }
 
 /* Function to GET Web API Data*/
-const getCityData = async (url, city) => {
+export const getCityData = async (url, city) => {
                                     // !!!
                                     console.log('... app.js : getCityData()');
 
@@ -178,3 +178,4 @@ const updateUI = async () => {
                                     throw new UserException('UI', `updateUI() ... ${error}`)
                                 }
 }
+
