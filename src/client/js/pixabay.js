@@ -1,4 +1,4 @@
-import { mergeObjects } from "./weather";
+import { mergeObjects } from './weather';
 import defaultImg from '../media/globe.jpg';
 import { UserException } from './exception';
 
@@ -52,7 +52,7 @@ export const postPixabayCity = async (data) => {
                                                                   body: JSON.stringify(paramObj)
                                                                 }).catch( 
                                                                     error => {
-                                                                                throw new UserExcption('pixabay', `postPixabayCity() fetch() error: ${error}`)
+                                                                                throw new UserException('pixabay', `postPixabayCity() fetch() error: ${error}`)
                                                                              }
                                                                 );
 
