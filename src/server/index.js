@@ -32,6 +32,16 @@ const destinationData = {};
 // To make HTTP calls
 const request = require('request');
 
+// JSON test response
+const jsonTest = {
+    "message" : "Is this working?"
+}
+
+// Test
+app.get('/test', (req, res) => {
+    res.send(jsonTest)
+})
+
 // Callback function to serve homepage
 app.get('/destination', (req, res) => {
     // !!!
