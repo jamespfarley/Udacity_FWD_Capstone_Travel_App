@@ -170,8 +170,8 @@ const updateUI = async () => {
                                     document.getElementById('city_lng').innerHTML = 'Longitude : ' + data.longitude;
                                     document.getElementById('currForecast').innerHTML = 'Current forecast : ';
                                     document.getElementById('forecast').innerHTML = data.forecast
-                                    document.getElementById('lo_temp').innerHTML = 'Low : ' + data.lo_temp;
-                                    document.getElementById('hi_temp').innerHTML = 'High : ' + data.hi_temp;
+                                    document.getElementById('lo_temp').innerHTML = 'Lo : ' + data.lo_temp;
+                                    document.getElementById('hi_temp').innerHTML = 'Hi : ' + data.hi_temp;
 
                                     destinationImg.setAttribute('src', data.image);
                                 } catch(error) {
