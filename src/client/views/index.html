@@ -8,30 +8,40 @@
         <div class="container">
             <div class="header">Travel Planner</div>
             <div class="search">
-                <div class="criteria">
+                <div id="cityInput">
                     <label for="destination">Destination : </label>
-                    <input id="destination" placeholder="Enter your destination i.e. Paris ..." required><span class="err" id="cityErrMsg"></span>
+                    <input id="destination" placeholder="Enter your destination i.e. Paris ..." required><span class="err" id="cityErrMsg">Please enter a vaid city ...</span>
+                </div>
+                <div id="dateInput">
                     <label for="departureDate">Departing : </label>
-                    <input type="date" id="departureDate" required><span class="err" id="dateErrMsg"></span>
+                    <input type="date" id="departureDate" required><span class="err" id="dateErrMsg">Please enter a valid departure date ...</span>
+                </div>
+                <div id="searchBtn">
                     <button id="search" type="button">Take Me Away</button>
                 </div>
             </div>
             <div class="itinerary">
-                <div class="subItems">
-                    <div class="output" id=city></div>
-                    <div class="output" id="country"></div>
-                    <div class="output" id="tripDate"></div>
-                    <div class="output" id="daysTilDepart"></div>
-                    <div class="output" id="city_lat"></div>
-                    <div class="output" id="city_lng"></div>
-                    <div class="output" id="currForecast"></div>
-                    <div class="output" id="forecast"></div>
-                    <div class="output" id="lo_temp"></div>
-                    <div class="output" id="hi_temp"></div>
-                    <img class="output" id="image"/>
+                <div class="tripContainer">
+                    <div class="subItems" id="pic">
+                        <img class="output" id="image"/>
+                    </div>
+                    <div class="subItems" id="detail">
+                        <div class="output" id=city></div>
+                        <div class="output" id="country"></div>
+                        <div class="output" id="tripDate"></div>
+                        <div class="output" id="daysTilDepart"></div><br>
+                        <div class="output" id="city_lat"></div>
+                        <div class="output" id="city_lng"></div><br>
+                        <div class="output" id="currForecast"></div>
+                        <div class="output" id="forecast"></div>
+                        <div class="output" id="lo_temp"></div>
+                        <div class="output" id="hi_temp"></div>
+                    </div>
+                </div> 
+                <div id="action">
                     <button id="save" type="button">Save Trip</button>
                     <button id="delete" type="button">Remove Trip</button>
-                </div>            
+                </div>                           
             </div>
         </div>
         <script>
