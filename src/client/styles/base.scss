@@ -8,11 +8,10 @@
 
 .container {
     display: grid;
-    gap: 5px;
-    grid-template-rows: 30vh 20vh 45vh;
+    gap: 10px;
+    grid-template-rows: auto auto auto;
     grid-template-areas: 
                         "head"
                         "srch"
                         "itin";
 }
-
