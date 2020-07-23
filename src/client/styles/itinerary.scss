@@ -5,105 +5,63 @@
     font-family: Raleway;
 }
 
+.tripContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+ }
+
 img {
-    height: 25vh;
-    width: 25vh;
+    height: 100%;
+    width: 75%;
 }
 
 button {
-    height: 5vh;
-    width: 7vw;
+    height: 36px;
+    width: 105px;
     background-color: lightgrey;
     border: 2px solid darkgrey;
     font-family: Raleway;
+    margin-left: 5px;
+}
+
+#pic {
+    width: 290px;
+    text-align: center;
 }
 
 .subItems {
-    display: grid;
-    gap: 5px;
-    grid-template-columns: 15vw 15vw 10vw 15vw 15vw;
-    grid-template-rows: repeat(7, 3vh) 5vh 5vh;
-    grid-template-areas: 
-                "img dest dest dest dest"
-                "img date date date date"
-                "img days days days days"
-                "img lat lat lat lat"
-                "img lng lng lng lng"
-                "img txt fore fore fore"
-                "img tmp tmp tmp tmp"
-                "img btn btn btn btn btn";
+    width: 15vw;
 }
 
-#image {
-    grid-area: img;
-    grid-row: 1 / 8;
-    grid-column: 1;
+#forecast, #lo_temp, #hi_temp {
+    text-align: right;
 }
 
-#city {
-    grid-area: dest;
-    grid-row: 1;
-    grid-column: 2 / 5;
+#action {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 252px;
+    margin-top: 10px;
 }
 
-#tripDate {
-    grid-area: date;
-    grid-row: 2;
-    grid-column: 2;
+#detail {
+    margin-left: 10px;
+    width: 355px;
+    font-size: 130%;
 }
 
+/* @media (max-width: 980px){
+    .tripContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-#daysTilDepart {
-    grid-area: days;
-    grid-row: 3;
-    grid-column: 2;
-}
+    #action {
+        width: 100%;
+        justify-content: center;
+    }
+} */
 
-#city_lat {
-    grid-area: lat;
-    grid-row: 4;
-    grid-column: 2 / -2;
-}
-
-#city_lng {
-    grid-area: lng;
-    grid-row: 5;
-    grid-column: 2 / -2;
-}
-
-#currForecast {
-    grid-area: txt;
-    grid-row: 6;
-    grid-column: 2;
-}
-
-#forecast {
-    grid-area: fore;
-    grid-row: 6;
-    grid-column: 3 /-1;
-}
-
-#lo_temp {
-    grid-area: tmp;
-    grid-row: 7;
-    grid-column: 3;
-}
-
-#hi_temp {
-    grid-area: tmp;
-    grid-row: 7;
-    grid-column: 4;
-}
-
-#save {
-    grid-area: btn;
-    grid-row: 8;
-    grid-column: 2;
-    justify-self: end;
-}
-
-#delete {
-    grid-area: btn;
-    grid-row: 8;
-    grid-column: 3;
-}
