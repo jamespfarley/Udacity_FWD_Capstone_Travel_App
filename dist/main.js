@@ -100,7 +100,7 @@ exports = ___CSS_LOADER_API_IMPORT___(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Oswald);"]);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Raleway);"]);
 // Module
-exports.push([module.i, "/* * {\n    border: 1px red solid;\n} */\n.container {\n  display: grid;\n  gap: 5px;\n  grid-template-rows: 30vh 20vh 45vh;\n  grid-template-areas: \"head\" \"srch\" \"itin\"; }\n", ""]);
+exports.push([module.i, "/* * {\n    border: 1px red solid;\n} */\n.container {\n  display: grid;\n  gap: 10px;\n  grid-template-rows: auto auto auto;\n  grid-template-areas: \"head\" \"srch\" \"itin\"; }\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -139,7 +139,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".itinerary {\n  grid-area: itin;\n  padding: 10px 5px;\n  background-color: lightblue;\n  font-family: Raleway; }\n\nimg {\n  height: 25vh;\n  width: 25vh; }\n\nbutton {\n  height: 5vh;\n  width: 7vw;\n  background-color: lightgrey;\n  border: 2px solid darkgrey;\n  font-family: Raleway; }\n\n.subItems {\n  display: grid;\n  gap: 5px;\n  grid-template-columns: 15vw 15vw 10vw 15vw 15vw;\n  grid-template-rows: repeat(7, 3vh) 5vh 5vh;\n  grid-template-areas: \"img dest dest dest dest\" \"img date date date date\" \"img days days days days\" \"img lat lat lat lat\" \"img lng lng lng lng\" \"img txt fore fore fore\" \"img tmp tmp tmp tmp\" \"img btn btn btn btn btn\"; }\n\n#image {\n  grid-area: img;\n  grid-row: 1 / 8;\n  grid-column: 1; }\n\n#city {\n  grid-area: dest;\n  grid-row: 1;\n  grid-column: 2 / 5; }\n\n#tripDate {\n  grid-area: date;\n  grid-row: 2;\n  grid-column: 2; }\n\n#daysTilDepart {\n  grid-area: days;\n  grid-row: 3;\n  grid-column: 2; }\n\n#city_lat {\n  grid-area: lat;\n  grid-row: 4;\n  grid-column: 2 / -2; }\n\n#city_lng {\n  grid-area: lng;\n  grid-row: 5;\n  grid-column: 2 / -2; }\n\n#currForecast {\n  grid-area: txt;\n  grid-row: 6;\n  grid-column: 2; }\n\n#forecast {\n  grid-area: fore;\n  grid-row: 6;\n  grid-column: 3 /-1; }\n\n#lo_temp {\n  grid-area: tmp;\n  grid-row: 7;\n  grid-column: 3; }\n\n#hi_temp {\n  grid-area: tmp;\n  grid-row: 7;\n  grid-column: 4; }\n\n#save {\n  grid-area: btn;\n  grid-row: 8;\n  grid-column: 2;\n  justify-self: end; }\n\n#delete {\n  grid-area: btn;\n  grid-row: 8;\n  grid-column: 3; }\n", ""]);
+exports.push([module.i, ".itinerary {\n  grid-area: itin;\n  padding: 10px 5px;\n  background-color: lightblue;\n  font-family: Raleway; }\n\n.tripContainer {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-start; }\n\nimg {\n  height: 100%;\n  width: 75%; }\n\nbutton {\n  height: 36px;\n  width: 105px;\n  background-color: lightgrey;\n  border: 2px solid darkgrey;\n  font-family: Raleway;\n  margin-left: 5px; }\n\n#pic {\n  width: 290px;\n  text-align: center; }\n\n.subItems {\n  width: 15vw; }\n\n#forecast, #lo_temp, #hi_temp {\n  text-align: right; }\n\n#action {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end;\n  width: 252px;\n  margin-top: 10px; }\n\n#detail {\n  margin-left: 10px;\n  width: 355px;\n  font-size: 130%; }\n\n/* @media (max-width: 980px){\n    .tripContainer {\n        display: flex;\n        flex-direction: column;\n        align-items: center;\n    }\n\n    #action {\n        width: 100%;\n        justify-content: center;\n    }\n} */\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -157,7 +157,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, ".search {\n  grid-area: srch;\n  padding: 10px 5px;\n  background-color: lightgrey; }\n\n.search .criteria {\n  font-family: Raleway;\n  display: grid;\n  gap: 10px;\n  grid-template-columns: 7vw 20.5vw 30vw;\n  grid-template-rows: repeat(3, 4vh);\n  grid-area: \"lbl input err\" \"lbl input err\" \"btn btn err\"; }\n\n#departureDate, #destination {\n  width: 20vw; }\n\nlabel {\n  grid-template-areas: lbl;\n  width: 9vw;\n  height: 3vh;\n  text-align: left; }\n\ninput {\n  grid-template-areas: input;\n  height: 3vh;\n  font-family: Raleway;\n  font-size: medium; }\n\n#search {\n  grid-template-areas: btn;\n  grid-column: 2;\n  width: 10vw;\n  background-color: lightblue;\n  justify-self: end;\n  border: 2px solid darkgrey;\n  font-family: Raleway; }\n\ninput:invalid:required {\n  border: 2px solid red; }\n\n.err {\n  grid-area: err;\n  font-family: Raleway;\n  color: red; }\n\n#cityErrMsg {\n  grid-row: 1;\n  grid-column: 3; }\n\n#dateErrMsg {\n  grid-row: 2;\n  grid-column: 3; }\n", ""]);
+exports.push([module.i, ".search {\n  grid-area: srch;\n  padding: 1vh .5vw;\n  font-family: Raleway;\n  background-color: lightgrey; }\n\n.err {\n  font-family: Raleway;\n  color: red;\n  margin-left: 1vw; }\n\n#search {\n  height: 36px;\n  width: 105px;\n  background-color: lightblue;\n  justify-self: end;\n  border: 2px solid darkgrey;\n  font-family: Raleway; }\n\n#cityInput {\n  margin-bottom: 2vh;\n  display: flex;\n  flex-direction: row;\n  justify-content: start; }\n\n#departureDate, #destination {\n  width: 290px;\n  height: 24px;\n  margin-left: 10px;\n  font-size: 115%; }\n\n#tripDate {\n  margin-left: 10px; }\n\n#dateInput {\n  margin-bottom: 10px;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-start; }\n\n#searchBtn {\n  width: 230px;\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-end; }\n\ninput:invalid:required {\n  border: 2px solid red; }\n\nlabel {\n  width: 105px;\n  height: 21px;\n  text-align: right;\n  margin-left: 10px;\n  font-size: large; }\n\ninput {\n  height: 3vh;\n  font-family: Raleway;\n  font-size: medium; }\n\n@media (max-width: 980px) {\n  #cityInput {\n    margin-bottom: 10px;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-start;\n    height: 75px; }\n  #dateInput {\n    margin-bottom: 10px;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-start;\n    height: 75px; }\n  #searchBtn {\n    width: 115px; }\n  label {\n    text-align: left; } }\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -892,8 +892,8 @@ const updateUI = async () => {
                                     document.getElementById('city_lng').innerHTML = 'Longitude : ' + data.longitude;
                                     document.getElementById('currForecast').innerHTML = 'Current forecast : ';
                                     document.getElementById('forecast').innerHTML = data.forecast
-                                    document.getElementById('lo_temp').innerHTML = 'Low : ' + data.lo_temp;
-                                    document.getElementById('hi_temp').innerHTML = 'High : ' + data.hi_temp;
+                                    document.getElementById('lo_temp').innerHTML = 'Lo : ' + data.lo_temp;
+                                    document.getElementById('hi_temp').innerHTML = 'Hi : ' + data.hi_temp;
 
                                     destinationImg.setAttribute('src', data.image);
                                 } catch(error) {
