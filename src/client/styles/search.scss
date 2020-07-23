@@ -1,66 +1,108 @@
 .search {
     grid-area: srch;
-    padding: 10px 5px;
+    //padding: 10px 5px;
+    padding: 1vh .5vw;
+    font-family: Raleway;
     background-color: lightgrey;
 }
 
-.search .criteria {
+.err {
     font-family: Raleway;
-    display: grid;
-    gap: 10px;
-    grid-template-columns: 7vw 20.5vw 30vw;
-    grid-template-rows: repeat(3, 4vh);
-    grid-area: 
-            "lbl input err"
-            "lbl input err"
-            "btn btn err"
-}
-
-#departureDate, #destination {
-    width: 20vw;
-}
-
-label {
-    grid-template-areas: lbl;
-    width: 9vw;
-    height: 3vh;
-    text-align: left;
-}
-
-input {
-    grid-template-areas: input;
-    height: 3vh;
-    font-family: Raleway;
-    font-size: medium;
+    color: red;
+    margin-left: 1vw;
 }
 
 #search {
-    grid-template-areas: btn;
-    grid-column: 2;
-    width: 10vw;
+    //height: 5vh;
+    //width: 7vw;
+    height: 36px;
+    width: 105px;
     background-color: lightblue;
     justify-self: end;
     border: 2px solid darkgrey;
     font-family: Raleway;
 }
 
+#cityInput {
+    margin-bottom: 2vh;
+    display:flex;
+    flex-direction: row;
+    justify-content: start;
+}
+
+#departureDate, #destination {
+    //width: 22vw;
+    //width: 250px;
+    //height: 21px;
+    width: 290px;
+    height: 24px;
+    margin-left: 10px;
+    font-size: 115%;
+}
+
+#tripDate {
+    margin-left: 10px;
+}
+
+#dateInput {
+    margin-bottom: 10px;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#searchBtn {
+    //width: 14vw;
+    width: 230px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end
+}
 
 input:invalid:required {
     border: 2px solid red;
 }
 
-.err {
-    grid-area: err;
+label {
+    //width: 9vw;
+    //height: 3vh;
+    width: 105px;
+    height: 21px;
+    text-align: right;
+    margin-left: 10px;
+    font-size: large;
+}
+
+input {
+    height: 3vh;
     font-family: Raleway;
-    color: red;
+    font-size: medium;
 }
 
-#cityErrMsg {
-    grid-row: 1; 
-    grid-column: 3;
-}
 
-#dateErrMsg {
-    grid-row: 2; 
-    grid-column: 3;
+@media (max-width: 980px){
+    #cityInput {
+        margin-bottom: 10px;
+        display:flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 75px;
+    }
+
+    #dateInput {
+        margin-bottom: 10px;
+        display:flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 75px;
+    }
+
+    #searchBtn {
+        width: 115px;
+    }
+
+    label {
+        text-align: left;
+    } 
+
 }
