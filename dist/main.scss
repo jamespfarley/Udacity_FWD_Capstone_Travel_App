@@ -1,0 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald);
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+.container{display:grid;gap:10px;grid-template-rows:auto auto auto;grid-template-areas:"head" "srch" "itin"}
+
+.header{grid-area:head;background-image:url(0c61baeef3887616609986dcefb47461.jpg);font-size:65px;font-weight:bolder;color:white;font-family:Oswald}
+
+.search{grid-area:srch;padding:1vh .5vw;font-family:Raleway;background-color:lightgrey}.err{font-family:Raleway;color:red;margin-left:1vw}#search{height:36px;width:105px;background-color:lightblue;justify-self:end;border:2px solid darkgrey;font-family:Raleway}#cityInput{margin-bottom:2vh;display:flex;flex-direction:row;justify-content:start}#departureDate,#destination{width:290px;height:24px;margin-left:10px;font-size:115%}#tripDate{margin-left:10px}#dateInput{margin-bottom:10px;display:flex;flex-direction:row;justify-content:flex-start}#searchBtn{width:230px;display:flex;flex-direction:row;justify-content:flex-end}input:invalid:required{border:2px solid red}label{width:105px;height:21px;text-align:right;margin-left:10px;font-size:large}input{height:3vh;font-family:Raleway;font-size:medium}@media (max-width: 980px){#cityInput{margin-bottom:10px;display:flex;flex-direction:column;justify-content:flex-start;height:75px}#dateInput{margin-bottom:10px;display:flex;flex-direction:column;justify-content:flex-start;height:75px}#searchBtn{width:115px}label{text-align:left}}
+
+.itinerary{grid-area:itin;padding:10px 5px;background-color:lightblue;font-family:Raleway}.tripContainer{display:flex;flex-direction:row;justify-content:flex-start}img{height:100%;width:75%}button{height:36px;width:105px;background-color:lightgrey;border:2px solid darkgrey;font-family:Raleway;margin-left:5px}#pic{width:290px;text-align:center}.subItems{width:15vw}#forecast,#lo_temp,#hi_temp{text-align:right}#action{display:flex;flex-direction:row;justify-content:flex-end;width:252px;margin-top:10px}#detail{margin-left:10px;width:355px;font-size:130%}
+

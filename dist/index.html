@@ -1,58 +1,13 @@
-<!DOCTYPE html>
-<html lang="en-US">
-    <head>
-        <meta charset="UTF-8" >
-        <title>Travel Planner</title>
-    </head>
-    <body>
-        <div class="container">
-            <div class="header">Travel Planner</div>
-            <div class="search">
-                <div id="cityInput">
-                    <label for="destination">Destination : </label>
-                    <input id="destination" placeholder="Enter your destination i.e. Paris ..." required><span class="err" id="cityErrMsg">Please enter a vaid city ...</span>
-                </div>
-                <div id="dateInput">
-                    <label for="departureDate">Departing : </label>
-                    <input type="date" id="departureDate" required><span class="err" id="dateErrMsg">Please enter a valid departure date ...</span>
-                </div>
-                <div id="searchBtn">
-                    <button id="search" type="button">Take Me Away</button>
-                </div>
-            </div>
-            <div class="itinerary">
-                <div class="tripContainer">
-                    <div class="subItems" id="pic">
-                        <img class="output" id="image"/>
-                    </div>
-                    <div class="subItems" id="detail">
-                        <div class="output" id=city></div>
-                        <div class="output" id="country"></div>
-                        <div class="output" id="tripDate"></div>
-                        <div class="output" id="daysTilDepart"></div><br>
-                        <div class="output" id="city_lat"></div>
-                        <div class="output" id="city_lng"></div><br>
-                        <div class="output" id="currForecast"></div>
-                        <div class="output" id="forecast"></div>
-                        <div class="output" id="lo_temp"></div>
-                        <div class="output" id="hi_temp"></div>
-                    </div>
-                </div> 
-                <div id="action">
-                    <button id="save" type="button">Save Trip</button>
-                    <button id="delete" type="button">Remove Trip</button>
-                </div>                           
-            </div>
-        </div>
-        <script>
-            // Check that service workers are supported
-            if ('serviceWorker' in navigator) {
-              // Use the window load event to keep the page load performant
-              window.addEventListener('load', () => {
-                navigator.serviceWorker.register('../../sw.js');
-              });
-            };
-        </script>
-        <script></script>
-    <script src="main.js"></script></body>
-</html>
+<!doctype html><html lang="en-US"><head><meta charset="UTF-8"><title>Travel Planner</title><link href="main.css" rel="stylesheet"></head><body><div class="container"><div class="header">Travel Planner</div><div class="search"><div id="cityInput"><label for="destination">Destination :</label> <input id="destination" placeholder="Enter your destination i.e. Paris ..." required><span class="err" id="cityErrMsg"></span></div><div id="dateInput"><label for="departureDate">Departing :</label> <input type="date" id="departureDate" required><span class="err" id="dateErrMsg"></span></div><div id="searchBtn"><button id="search" type="button">Take Me Away</button></div></div><div class="itinerary"><div class="tripContainer"><div class="subItems" id="pic"><img class="output" id="image"/></div><div class="subItems" id="detail"><div class="output" id="city"></div><div class="output" id="country"></div><div class="output" id="tripDate"></div><div class="output" id="daysTilDepart"></div><br><div class="output" id="city_lat"></div><div class="output" id="city_lng"></div><br><div class="output" id="currForecast"></div><div class="output" id="forecast"></div><div class="output" id="lo_temp"></div><div class="output" id="hi_temp"></div></div></div><div id="action"><button id="save" type="button">Save Trip</button> <button id="delete" type="button">Remove Trip</button></div></div></div><script>// Check that service workers are supported     
+            if ('serviceWorker' in navigator) {         
+            // Use the window load event to keep the page load performant         
+                window.addEventListener('load', () => {             
+                    navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                        // Registration was successful
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function(error) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', error);
+                     });
+                    });
+                };</script><script src="main.js"></script></body></html>
