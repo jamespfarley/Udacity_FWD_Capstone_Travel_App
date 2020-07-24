@@ -10,6 +10,10 @@ The app then queries three API's to display the following :
 - Current forecast, high and low temperature for the day
 - An image related to the destination
 
+The app employs the use of Local Storage to allow the user to save the travel itinerary.  If 
+the page is closed then revisited, the itinerary is displayed.  The user also has the option 
+remove the itinerary from Local Storage which also deletes the information from the UI.
+
 ## API's
 The app queries the following : 
 - [Geonames](http://www.geonames.org/export/web-services.html) api returning the city name, country latitude, and longitude.
