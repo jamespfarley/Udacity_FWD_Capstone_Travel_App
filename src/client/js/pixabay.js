@@ -3,59 +3,59 @@ import defaultImg from '../media/globe.jpg';
 import { UserException } from './exception';
 
 
-export const getDestinationImage = async (data) => {
-
-                                        // !!!
-                                        console.log('... pixabay.js : getDestinationImage() :: data.geonames[0].name = ' + JSON.stringify(data.geonames[0].name));
-
-                                        const pixabayURL = 'http://localhost:8081/pixabay';
-
-                                        const response = await fetch(pixabayURL).catch( error => { console.log(`updateUI fetch() error: ${error}`)});
-                                        try{
-
-                                            const imgData = {};
-                                            const retData = await response.json();
+    export const getDestinationImage = async (data) => {
 
                                             // !!!
-                                            console.log('...  pixabay.js : getDestinationImage() :: data = ' + JSON.stringify(data));
-                                            console.log('...  pixabay.js : getDestinationImage() :: imgData.total = ' + JSON.stringify(retData.total));
+                                            console.log('... pixabay.js : getDestinationImage() :: data.geonames[0].name = ' + JSON.stringify(data.geonames[0].name));
 
-                                            if ( retData.total > 0) {
-                                                imgData['imgUrl'] = retData.hits[0].previewURL;
-                                            } else {
-                                                imgData['imgUrl'] = defaultImg;
-                                            }
+                                            const pixabayURL = 'http://localhost:8081/pixabay';
 
-                                            // !!!
-                                            console.log('...  pixabay.js : getDestinationImage() :: imgData = ' + JSON.stringify(imgData));
+                                            const response = await fetch(pixabayURL).catch( error => { console.log(`updateUI fetch() error: ${error}`)});
+                                            try{
 
-                                            return mergeObjects(data, imgData);
+                                                const imgData = {};
+                                                const retData = await response.json();
 
-                                        } catch(error){
-                                            throw new UserException('pixabay', `getDestinationImage() ... ${error}`)
-                                        }  
-}
+                                                // !!!
+                                                console.log('...  pixabay.js : getDestinationImage() :: data = ' + JSON.stringify(data));
+                                                console.log('...  pixabay.js : getDestinationImage() :: imgData.total = ' + JSON.stringify(retData.total));
 
-export const postPixabayCity = async (data) => {
+                                                if ( retData.total > 0) {
+                                                    imgData['imgUrl'] = retData.hits[0].previewURL;
+                                                } else {
+                                                    imgData['imgUrl'] = defaultImg;
+                                                }
 
-                                        const pixabayURL = 'http://localhost:8081/pixabay';
+                                                // !!!
+                                                console.log('...  pixabay.js : getDestinationImage() :: imgData = ' + JSON.stringify(imgData));
 
-                                        console.log('... postPixabayCity : data.geonames[0].name = ' + data.geonames[0].name);
+                                                return mergeObjects(data, imgData);
 
-                                        const paramObj = {};
-                                        paramObj['city'] = data.geonames[0].name;
+                                            } catch(error){
+                                                throw new UserException('pixabay', `getDestinationImage() ... ${error}`)
+                                            }  
+    }
 
-                                        const response = fetch(pixabayURL,
-                                                                { method: 'POST',
-                                                                  credentials: 'same-origin',
-                                                                  headers: {'Content-type':'application/json', },
-                                                                  body: JSON.stringify(paramObj)
-                                                                }).catch( 
-                                                                    error => {
-                                                                                throw new UserException('pixabay', `postPixabayCity() fetch() error: ${error}`)
-                                                                             }
-                                                                );
+    export const postPixabayCity = async (data) => {
 
-                                        return data;
+                                            const pixabayURL = 'http://localhost:8081/pixabay';
 
-}
+                                            console.log('... postPixabayCity : data.geonames[0].name = ' + data.geonames[0].name);
+
+                                            const paramObj = {};
+                                            paramObj['city'] = data.geonames[0].name;
+
+                                            const response = fetch(pixabayURL,
+                                                                    { method: 'POST',
+                                                                    credentials: 'same-origin',
+                                                                    headers: {'Content-type':'application/json', },
+                                                                    body: JSON.stringify(paramObj)
+                                                                    }).catch( 
+                                                                        error => {
+                                                                                    throw new UserException('pixabay', `postPixabayCity() fetch() error: ${error}`)
+                                                                                }
+                                                                    );
+
+                                            return data;
+
+    }

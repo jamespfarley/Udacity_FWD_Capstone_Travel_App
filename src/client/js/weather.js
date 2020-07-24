@@ -1,36 +1,36 @@
 import { UserException } from './exception';
 
-// Get weather data
-export const getWeatherData = async (data) => {
+    // Get weather data
+    export const getWeatherData = async (data) => {
 
-            const weatherbitBaseURL = `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WB_API_KEY}&lang=en&units=I&days=1`;
+                const weatherbitBaseURL = `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WB_API_KEY}&lang=en&units=I&days=1`;
 
-            let URL = `${weatherbitBaseURL}&city=${data.geonames[0].name}&country=${data.geonames[0].countryCode}`;
+                let URL = `${weatherbitBaseURL}&city=${data.geonames[0].name}&country=${data.geonames[0].countryCode}`;
 
-            const response = await fetch(URL).catch( error => { console.log(`getWeatherData fetch() error: ${error}`)});
-            try{
-                const weatherData = await response.json();
+                const response = await fetch(URL).catch( error => { console.log(`getWeatherData fetch() error: ${error}`)});
+                try{
+                    const weatherData = await response.json();
 
-                // !!!
-                console.log('... weather.js : getWeatherData() :: weatherData =  ' + JSON.stringify(weatherData));
+                    // !!!
+                    console.log('... weather.js : getWeatherData() :: weatherData =  ' + JSON.stringify(weatherData));
 
-                return mergeObjects(data, weatherData);
+                    return mergeObjects(data, weatherData);
 
-            } catch (error) {
-                throw new UserException('weather', `getWeatherData() ... ${error}`);
-            }
+                } catch (error) {
+                    throw new UserException('weather', `getWeatherData() ... ${error}`);
+                }
 
-}
+    }
 
-export function mergeObjects( object1, object2){
+    export function mergeObjects( object1, object2){
 
-    console.log('... mergeObjects() :: object1 = ' + JSON.stringify(object1) + ' ... object2 = ' + JSON.stringify(object2));
+        console.log('... mergeObjects() :: object1 = ' + JSON.stringify(object1) + ' ... object2 = ' + JSON.stringify(object2));
 
-    let dataObj = {   ...object1
-                    , ...object2 
-                };
+        let dataObj = {   ...object1
+                        , ...object2 
+                    };
 
-    console.log('... mergeObjects() :: dataObj = ' + JSON.stringify(dataObj));
+        console.log('... mergeObjects() :: dataObj = ' + JSON.stringify(dataObj));
 
-    return dataObj;
-}
+        return dataObj;
+    }
