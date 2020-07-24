@@ -10,11 +10,11 @@
             <div class="search">
                 <div id="cityInput">
                     <label for="destination">Destination : </label>
-                    <input id="destination" placeholder="Enter your destination i.e. Paris ..." required><span class="err" id="cityErrMsg">Please enter a vaid city ...</span>
+                    <input id="destination" placeholder="Enter your destination i.e. Paris ..." required><span class="err" id="cityErrMsg"></span>
                 </div>
                 <div id="dateInput">
                     <label for="departureDate">Departing : </label>
-                    <input type="date" id="departureDate" required><span class="err" id="dateErrMsg">Please enter a valid departure date ...</span>
+                    <input type="date" id="departureDate" required><span class="err" id="dateErrMsg"></span>
                 </div>
                 <div id="searchBtn">
                     <button id="search" type="button">Take Me Away</button>
@@ -45,14 +45,19 @@
             </div>
         </div>
         <script>
-            // Check that service workers are supported
-            if ('serviceWorker' in navigator) {
-              // Use the window load event to keep the page load performant
-              window.addEventListener('load', () => {
-                navigator.serviceWorker.register('../../sw.js');
-              });
-            };
+            // Check that service workers are supported     
+            if ('serviceWorker' in navigator) {         
+            // Use the window load event to keep the page load performant         
+                window.addEventListener('load', () => {             
+                    navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                        // Registration was successful
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    }, function(error) {
+                        // registration failed :(
+                        console.log('ServiceWorker registration failed: ', error);
+                     });
+                    });
+                }; 
         </script>
-        <script></script>
     </body>
 </html>
